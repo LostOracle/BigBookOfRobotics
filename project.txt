@@ -1,0 +1,144 @@
+Go for buying 6 motor controllers
+Go for buying 8 11.1v lipos
+Look at routers
+Need 4 more motors with encoders
+
+Get 4 displays from ameridroid
+
+Add fuses
+All robots need switches
+
+Need 3 dc to dc converters
+
+superdroid 24v motors on the 6whweel
+
+buy 4 - XU3 Lite
+EMMCs
+Clock batteries
+
+Document system setup
+
+Phase 2 - Ros infrastructure with Matt's? control panel
+
+Phase 3 - sensors
+
+Installing linux and ros on the odroid
+
+Context
+
+Rich and Scott talking about where to go once rpm in ROS Jade.
+Jade coming soon
+How do make Fedora better
+Utilize Kickstart
+live CDs - push button go
+VM images - download go
+images for common platforms such as fedora ros on odroid
+eventually jenkins will build images for ros and odroids with updated stuff
+  dumps out .img to set up sd cards
+Angelmaker
+
+There exists a livecd for fedora 21 64 bit, arm coming soon
+
+How scott used to do this:
+  start with nothing
+  dump packages at filesystem
+  rpm or deb install
+  bootstrap the system, usually a livecd with rpm, yum, anaconda
+  installs to new empty harddrive
+  post install tasks - keyboard, language, initramfs for kernel, timezone, user passwords
+  
+  empty sd card file partitioned
+    special folders
+     /dev
+     /dev/shm
+     /dev/pts
+     /sys
+     /proc
+     /tmp
+    
+  binding mount
+    binds folders on runnign system to those folders
+  mount -o bind /dev /mnt/tmp/dev
+  
+  in /mnt/tmp
+  mkdir proc sys dev tmp dev/pts dev/shm
+  
+  bind to real system directory
+  mount -o bind /proc ./proc
+  mount -o bind /tmp tmp
+  mount -o bind /dev dev
+  mount -o bind /dev/pts dev/pts
+  mount -o bind /dev/shm dev/shm
+  
+  yum --install-root=/mnt/tmp --releasever=21 install filesystem --nogpgcheck(Note: need to use arm to build arm
+  y
+  
+  yum --install-root=/mnt/tmp --releasever=21 groupinstall "Minimal Install" --nogpgcheck
+  y
+  
+  vim etc/shadow (must do as root)
+   - remove the star from root
+   - then log in and set the root password save with w!
+  
+  
+  (on the host filesystem)
+  unmount dev/pts
+  unmount dev/shm
+  unmount dev
+  unmount proc
+  unmount tmp
+  unmount 
+  
+  
+  Actual way to do it!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  Kickstart, look it  under anaconda wiki
+  http://fedoraproject.org/wiki/Anaconda/Kickstart
+    started based on tablet kickstart
+    
+    don't set nontp
+  
+  how to use livemedia creator in the context of arm
+  
+  partitioning info in .ks file
+    after firewall --disabled
+    
+  #root password
+  rootpw --plaintext super_secure
+    
+  #partition the disk
+  bootloader --location=none
+  zerombr
+  clearpart --all
+  part /boot/uboot -size 100 --fstype vfat
+  part / --size 1536 --fstype ext4
+  part swap --size 500
+  
+  
+  sudo copy livemedia creator command form website point at kickstarter file, need to be root  
+  yields an img, write to sdcard or emmc using dd
+  
+  still needs kernel and bootloader
+    from hardkernel for odroid
+    
+  dracut for init ramfs
+  
+  Way the odroids boot
+  
+  bl2, sets execution address to 2nd byte on sd card and starts executing, firmware needs to be at front of card
+  after all the raw data, uboot itself. Has capability of accessing first vfat partition on system
+  uboot finds boot.ini - contains uboot commands that are paths to where kernel is, kernel args, specifically specify where root partition is
+  use uuid to specify root location partition
+  
+  On EMMCs
+  
+  remember raw data at front os SD card - written to a special partition on the EMMC especially for bootloader and data
+    should have 2 extra partitions on our EMMCs
+      ls /dev/mmcblk*
+    
+  
+Required Materials
+
+Scott Logan
+microSD to SD adapter
+EMMC to microSD adapter
+
