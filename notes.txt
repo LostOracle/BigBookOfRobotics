@@ -1,0 +1,125 @@
+XU3 setup
+
+1. Install Fuser
+
+	If running Fedora 21+
+	sudo yum install smd-odroid-release
+	sudo yum install odroid-xu3-sd-fuser
+
+	If running fedora 20
+	install http://csc.mcs.sdsmt.edu/smd-odroid/fedora/linux/21/x86_64/odroid-xu3-sd-fuser-0.2.0-1.fc21.noarch.rpm
+
+	Plug in emmc via microsd to sd converter.
+
+	Check the github wiki for more instructios on the fuser:
+	https://github.com/sdsmt-robotics-odroids/odroid-xu/wiki/Boot-Media-Fusing
+
+	odroid-xu3-emmc-fuser /dev/mmcblkX
+
+	Find the value of X by : 
+	ls /dev/mmcblk*
+
+	should see this:
+	Successfully enabled write access to /dev/mmcblk0boot0.
+	Fusing boot blob to /dev/mmcblk0boot0...
+	1262+0 records in
+	1262+0 records out
+	646144 bytes (646 kB) copied, 1.71663 s, 376 kB/s
+	Success!
+	
+2. Load the emmc image 
+	get the image from: http://csc.mcs.sdsmt.edu/smd-odroid/fedora/linux/21/Images/armhfp/
+
+	run this to uncompress
+	xz -d <foo>.img.xz
+
+	This will take some time, about a minute.
+
+	MAke sure you unmount the partitions from the filesystem before running the dd command. Be careful
+	sudo umount /dev/mmcblk0p*
+
+	Be careful with this or you'll explode your computer
+	sudo dd if=<foo>.img of=/dev/mmcblk0 bs=8M
+
+	This will take a little time. 3-4 minutes
+
+	Should see something like this:
+	204+1 records in
+	204+1 records out
+	1713373184 bytes (1.7 GB) copied, 91.7598 s, 18.7 MB/s
+
+	Run sync. Maybe twice. Just do it.
+
+3. Go
+	Only  root user is enable by default
+	password is super_secure
+
+4. Instal ROS - won't be necessary once Scott gets the kickstart version with ROS up and running
+
+Common Error:
+
+ One of the configured repositories failed (Fedora 21 - armhfp),
+ and yum doesn't have enough cached data to continue. At this point the only
+ safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+     1. Contact the upstream for the repository and get them to fix the problem.
+
+     2. Reconfigure the baseurl/etc. for the repository, to point to a working
+        upstream. This is most often useful if you are using a newer
+        distribution release than is supported by the repository (and the
+        packages for the previous distribution release still work).
+
+     3. Disable the repository, so yum won't use it by default. Yum will then
+        just ignore the repository until you permanently enable it again or use
+        --enablerepo for temporary usage:
+
+            yum-config-manager --disable fedora
+
+     4. Configure the failing repository to be skipped, if it is unavailable.
+        Note that yum will try to contact the repo. when it runs most commands,
+        so will have to try and fail each time (and thus. yum will be be much
+        slower). If it is a very temporary problem though, this is often a nice
+        compromise:
+
+            yum-config-manager --save --setopt=fedora.skip_if_unavailable=true
+
+Cannot retrieve metalink for repository: fedora/21/armhfp. Please verify its path and try again
+
+Root cause - internal cause is wrong and the certificates are not valid. Synch the clock to fix this error
+	type date to check time
+	update system clock
+	ntpdate ntp.sdsmt.edu
+	(only for this run - temporary fix)
+
+	update the hardware clock to the current system clock
+	hwclock -w
+
+	If you don't have an RTC battery, this will need to be done every time you boot or yum won't work
+
+If weird things the dtb file not being updated with the kernel happen, just get a new image and repeat. This will be
+fixed in a future image.
+
+
+NExt Install Ros
+	Install the repo where our install of ROS lives
+	sudo yum install http://csc.mcs.sdsmt.edu/smd-pub/fedora/linux/21/armhfp/smd-ros-release-21-2.noarch.rpm
+
+	You also need rpm fusion - extended set of packages not in the basic fedora rpms
+	sudo yum localinstall --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm  -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm	
+
+	Now you can sudo yum install pretty much any ros fedora package
+	this is a good starting point, particularly if you're not using PCL or Gazebo
+	sudo yum install ros-indigo-robot
+
+	Another useful set of packages if you're compiling on the device
+	Some of these aren't REALLY required, but you proabably want them
+	sudo yum install python-rosdep python-rosinstall_generator python-wstool python-rosinstall @buildsys-build
+
+	A link to the ROS wiki with more information
+	WIKI:
+	http://wiki.ros.org/indigo/Installation/Source
+
+	This is a pretty basic install. You'll want to run
+	rosdep install --from-path <src> --ignore-src
+	where src is a path to a directory containing ros packages. This will install any missing dependancies that
+	may not have been installed this far.
