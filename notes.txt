@@ -1,20 +1,23 @@
 XU3 setup
 
 1. Install Fuser
-
+	(Note: you can use
+		cat /etc/issue
+	to check your Fedora version)
+	
 	If running Fedora 21+
 	sudo yum install smd-odroid-release
 	sudo yum install odroid-xu3-sd-fuser
 
 	If running fedora 20
-	install http://csc.mcs.sdsmt.edu/smd-odroid/fedora/linux/21/x86_64/odroid-xu3-sd-fuser-0.2.0-1.fc21.noarch.rpm
+	sudo yum install http://csc.mcs.sdsmt.edu/smd-odroid/fedora/linux/21/x86_64/odroid-xu3-sd-fuser-0.2.0-1.fc21.noarch.rpm
 
 	Plug in emmc via microsd to sd converter.
 
 	Check the github wiki for more instructios on the fuser:
 	https://github.com/sdsmt-robotics-odroids/odroid-xu/wiki/Boot-Media-Fusing
 
-	odroid-xu3-emmc-fuser /dev/mmcblkX
+	sudo odroid-xu3-emmc-fuser /dev/mmcblkX
 
 	Find the value of X by : 
 	ls /dev/mmcblk*
@@ -29,6 +32,8 @@ XU3 setup
 	
 2. Load the emmc image 
 	get the image from: http://csc.mcs.sdsmt.edu/smd-odroid/fedora/linux/21/Images/armhfp/
+	
+	Make sure you get the newest one for the odroid type you have, in the .xz format
 
 	run this to uncompress
 	xz -d <foo>.img.xz
