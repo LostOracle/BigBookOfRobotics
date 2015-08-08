@@ -1,0 +1,60 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX root = Proposal.tex
+
+%%%  This is the main driver file.   It is mostly a list of file includes.   Read through and edit as needed.
+
+\documentclass[table]{book}
+
+\input{paperstyle.tex} % This sets the format.
+
+% Add your title page contents here 
+\title{{ \rule{\linewidth}{0.5mm}}\\[2mm] {\huge \bfseries  How To Build a ROS Robot }\\[-1mm] {\rule{\linewidth}{0.5mm}} \\  \vfill
+{\LARGE \bfseries  SDSMT Robotics Team }\vfill}
+\author{Ian Carlson }
+\date{\today}
+
+
+
+\begin{document}
+
+\maketitle
+
+\frontmatter
+
+\addcontentsline{toc}{chapter}{Title}
+\maketitle
+\tableofcontents
+\addcontentsline{toc}{chapter}{Contents}
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+%\listoftables
+%\addcontentsline{toc}{chapter}{List of Tables}
+%\listofalgorithms
+%\addcontentsline{toc}{chapter}{List of Algorithms}
+ 
+ 
+\mainmatter
+\input{intro.tex}
+%\input{implementation.tex}
+%\input{ann.tex}
+%\input{reproduction.tex}
+%\input{results.tex}
+%\input{futureWork.tex}
+
+
+%%%  Done with chapters
+% Bib stuff
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs.bib}
+\input{refs.bib}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+
+\appendix
+%\input{originalProposal.tex}
+%\input{users_guide.tex}
+%\chapter{Code}
+%\input{code.tex}
+
+\end{document}

@@ -1,0 +1,198 @@
+% !TEX root = HowToRobot.tex
+
+\chapter{Odroid Setup}
+\label{chap:odroidsetup}
+
+\section{Purpose Of This Chapter}
+
+This chapter is intended to be a guide for setting up an Odroid XU3 with Fedora 21, using an EMMC as the storage device. Step by step guides for using an SD card exist in plenty on the internet, and only the first two steps are any different. The steps should work with Fedora 22 as well, but Fedora 22 was still very new when I last worked with the Odroids and wasn't ready for installation on an arm architecture yet. For installation on other Odroid platforms, the steps should be very similar, but may not be exactly the same.
+
+\section{Before You Begin}
+
+You will need the following items to complete this guide:
+\begin{enumerate}
+\item{Odroid XU3}
+\item{USB to MicroSD Adapter}
+\item{MicroSD to EMMC Adapter}
+\item{EMMC}
+\item{Computer Running Fedora 20/21}
+\item{USB to Serial Adapter}
+\end{enumerate}
+
+Check your version of Fedora before beginning. You can do this using the command:
+\begin{lstlisting}[language=bash]
+  $ cat /etc/issue
+\end{lstlisting}
+
+You want to check if you're running Fedora 20 or Fedora 21+. This will be important later.
+
+\section{Obtain the Fuser}
+
+The Fuser is a utility written by Scott Logan to set up the EMMC in such a way that the Fedora image fits on the EMMC efficiently. It sets the "fuse" bit, which are sort of like software-writable settings on the EMMC. Modifying these bits manually is pretty difficult, which is why you'll want to use the Fuser to do it for you.
+
+On Fedora 21+, run:
+\begin{lstlisting}[language=bash]
+  $ sudo yum install smd-odroid-release
+  $ sudo yum install odroid-xu3-sd-fuser
+\end{lstlisting}
+
+These two commands download repository information for the smd-odroid-release repository - which Scott maintains - and then downloads and installs the fuser itself.
+
+Of Fedora 20, the repository headers will not automatically download. You'll have to download the fuser more directly. Instead run:
+
+\begin{lstlisting}[language=bash]
+  $ sudo yum install http://csc.mcs.sdsmt.edu/smd-odroid/fedora/linux/21/x86_64/odroid-xu3-sd-fuser-0.2.0-1.fc21.noarch.rpm
+\end{lstlisting}
+
+\section{Run The Fuser}
+
+If you run in to problems, there is a wiki page with instructions specifically for the fuser at \url{https://github.com/sdsmt-robotics-odroids/odroid-xu/wiki/Boot-Media-Fusing}.
+
+Before inserting the EMMC, run the command:
+
+\begin{lstlisting}[language=bash]
+  $ ls /dev/mmcblk*
+\end{lstlisting}
+
+Take note of the entries there. Whatever you see there before inserting the EMMC is what you will NOT want to target in the next steps. Next, connect the EMMC to your computer. Plug the EMMC into the EMMC to MicroSD adapter. If your machine has a MicroSD slot, you can plug that directly in to your computer. If not, (or if you encounter problems, which can happen rarely mostly due to driver issues) you'll need a MicroSD to USB adapter.
+
+Run the ls command again. There should be new entries, probably something like /dev/mmcblkX... in a few various forms. Take note of the value of X. Now run the following command, substituting your number (usually 0) for X.
+
+\begin{lstlisting}[language=bash]
+  $ sudo odroid-xu3-emmc-fuser /dev/mmcblkX
+\end{lstlisting}
+
+You should see the following:
+\begin{lstlisting}[language=bash]
+    Successfully enabled write access to /dev/mmcblk0boot0.
+	Fusing boot blob to /dev/mmcblk0boot0...
+	1262+0 records in
+	1262+0 records out
+	646144 bytes (646 kB) copied, 1.71663 s, 376 kB/s
+	Success!
+\end{lstlisting}
+
+If you don't see something like this, specifically if there are 0+0 records in or out, something has gone wrong. Try again or check the wiki instructions for the Fuser.
+
+\section{Loading The EMMC Image}
+
+First you need to get the image to write to the EMMC. The images are hosted at \url{http://csc.mcs.sdsmt.edu/smd-odroid/fedora/linux/21/Images/armhfp/}. You'll want to download the "latest" image for your type of Odroid. In this case, the filename will probably be something like: f21-odroid-xu3-minimal-latest.img.xz.
+
+Once you have downloaded the image, uncompress it using the following command with <foo> replaced by the image name. This will take about a minute.
+
+\begin{lstlisting}[language=bash]
+  $ xz -d <foo>.img.xz
+\end{lstlisting}
+
+Next, you need to unmout the EMMC partitions or they won't write correctly. Do so with the following command, again substituting your value for X:
+
+\begin{lstlisting}[language=bash]
+  $ sudo umount /dev/mmcblkXp*
+\end{lstlisting}
+
+Be careful with this next command. dd is a very powerful tool, and it can totally erase your harddrive if you let it. Mostly just make sure you don't accidentally point it at the wrong device. if is the input file - the image you uncompressed. of is the target device, the mmblkX we identified earlier. Substitute your value for X. bs is the block size. Just leave it alone.
+
+\begin{lstlisting}[language=bash]
+  $ sudo dd if=<foo>.img of=/dev/mmcblkX bs=8M
+\end{lstlisting}
+
+This takes a while. On the order of 3 or 4 minutes when I did it last. Be patient. When it finishes, you should expect to see:
+\begin{lstlisting}[language=bash]
+    204+1 records in
+	204+1 records out
+	1713373184 bytes (1.7 GB) copied, 91.7598 s, 18.7 MB/s
+\end{lstlisting}
+
+Next, to make sure the OS has flushed all the buffers to the device, run:
+
+\begin{lstlisting}[language=bash]
+  $ sync
+\end{lstlisting}
+
+If there is a noticeable pause after running sync, run it again just in case. That pause means it's working on something. If there is no noticeable pause, it didn't do anything, and you're good to go.
+
+\section{What Next?}
+
+At this point, you have a functional EMMC with Fedora 21 installed. Go ahead and plug it back in to the Odroid. I recommend getting a USB-Serial converter cable to debug with. I also recommend getting a CMOS battery for the Odroid, or the system clock will reset every time the board is restarted. This makes yum unhappy and you'll have a bad time. ROS can throw some very strange time-related errors as well. If you only needed Fedora installed, you're done with this chapter - except perhaps see the section on common error messages. Otherwise, move on to the next section to install ROS. It's possible the Scott has the kick-start version up by now, with ROS already installed, but at the time of writing, that hasn't happened yet.
+
+\section{Installing ROS}
+
+The ROS build for arm isn't in with the normal ROS or Linux repositories. It was in fact hosted from, when I left, a set of 10 Odroids over in M113. To install this repository, run:
+
+\begin{lstlisting}[language=bash]
+  $ sudo yum install http://csc.mcs.sdsmt.edu/smd-pub/fedora/linux/21/armhfp/smd-ros-release-21-2.noarch.rpm
+\end{lstlisting}
+
+You'll also need rpm fusion, which is an extended set of packages for Fedora not bundled in to the main set of rpms. To install those, run:
+
+\begin{lstlisting}[language=bash]
+  $ sudo yum localinstall --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm  -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm	
+\end{lstlisting}
+
+Now, you should be able to use yum to install pretty much any ROS Fedora package. The following command will install the basic starting ROS packages. It doesn't not include PCL or Gazebo, but you shouldn't be running those on Odroids anyway.
+
+\begin{lstlisting}[language=bash]
+  $ sudo yum install ros-indigo-robot	
+\end{lstlisting}
+
+If you want to do on-board compiling, which you almost certainly will unless you've already finished development and are just deploying functional binaries, run the following command:
+
+\begin{lstlisting}[language=bash]
+  $ sudo yum install python-rosdep python-rosinstall_generator python-wstool python-rosinstall @buildsys-build	
+\end{lstlisting}
+
+That's it. Installing ROS is way easier than it used to be. If in doubt, here's a link to the ROS wiki page dealing with installation issues: \url{http://wiki.ros.org/indigo/Installation/Source}.
+
+This is a fairly basic install, so there may be some unresolved dependencies. If you're having dependency issues, run the following command where <src> is a directory containing ROS packages.
+
+\begin{lstlisting}[language=bash]
+  $ rosdep install --from-path <src> --ignore-src	
+\end{lstlisting}
+
+\section{Common Errors}
+
+There are a handful of pretty common errors that I found solutions for:
+
+\begin{lstlisting}[language=bash]
+  One of the configured repositories failed (Fedora 21 - x86_64 - Updates),
+and yum doesn't have enough cached data to continue. At this point the only
+safe thing yum can do is fail. There are a few ways to work "fix" this:
+
+ 1. Contact the upstream for the repository and get them to fix the problem.
+
+ 2. Reconfigure the baseurl/etc. for the repository, to point to a working
+    upstream. This is most often useful if you are using a newer
+    distribution release than is supported by the repository (and the
+    packages for the previous distribution release still work).
+
+ 3. Disable the repository, so yum won't use it by default. Yum will then
+    just ignore the repository until you permanently enable it again or use
+    --enablerepo for temporary usage:
+
+        yum-config-manager --disable updates
+
+ 4. Configure the failing repository to be skipped, if it is unavailable.
+    Note that yum will try to contact the repo. when it runs most commands,
+    so will have to try and fail each time (and thus. yum will be be much
+    slower). If it is a very temporary problem though, this is often a nice
+    compromise:
+
+        yum-config-manager --save --setopt=updates.skip_if_unavailable=true
+
+Cannot retrieve metalink for repository: updates/21/x86_64. Please verify its path and try again.	
+\end{lstlisting}
+
+So this is a pretty scary error, but the actual cause is pretty tame. This happens once on almost every new Odroid install. The root cause is actually that the internal clock is set way back in the past to a time where the repository didn't exist. So when yum tries to check for the repository certificates, none of them are valid yet. To verify that this was the problem use the command:
+
+\begin{lstlisting}[language=bash]
+  $ date
+\end{lstlisting}
+
+If your Odroid is kickin' it in the '70s. You've found the problem. This is an easy fix. Run the following commands. The first updates the current time using the ntp server on campus. The second updates the hardware clock, which persists between power cycles provided you have that CMOS battery installed. If not, you'll have to do this every time.
+
+\begin{lstlisting}[language=bash]
+  $ ntpdate ntp.sdsmt.edu
+  $	hwclock -w
+\end{lstlisting}
+
+There was, last time I spoke to Scott, a potential problem with a dtb file not being updated in the kernel. If this happens and causes problems, just get a new image and repeat this process. Scott was hoping to have this fixed soon, so it's probably already done by now, but I'll leave this warning here anyway.

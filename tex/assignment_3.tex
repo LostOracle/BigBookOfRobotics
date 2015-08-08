@@ -1,0 +1,129 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{enumitem}
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+\normalfont \normalsize 
+\huge How To Make a Robot With ROS \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Ian Carlson} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section*{Abstract}
+
+For our final project in Natural Computing, we plan on creating an artificial life simulation involving the evolution of characteristics and behaviors for simulated creatures. The project will feature a set of fixed physical characteristics and a neural network for each individual. Each of the characteristics, such as speed, size, health points, number of eyes, and combat skill, will have an associated metabolic cost. For instance, a large, powerful individual will require more food to survive than a smaller weaker creature, but be able to kill the weaker creature for food. The neural network associated with each individual will be used to determine the individual's behavior given sensory information. The topology for the neural net of each individual will vary based on the number of sensory organs the individual has. Only the input layer of the neural net will be subject to changes in topology. The rest of the net will be fixed. A tournament style ranking will be employed for selection, and both mutation and crossover will be applied to the characteristics and neural networks.
+
+\section*{Project}%
+
+The inspiration for this project comes from a video posted on YouTube by Paul Oliver dealing with an artificial life simulation \cite{oliver}. While the video was the initial inspiration for the project, we wanted to take the idea further than the original author did.
+
+The traits of each creature will be the following:
+
+\begin{itemize}[noitemsep]
+  \item Number of eyes
+  \begin{itemize}[noitemsep]
+     \item Eye placement
+     \item Eye view distance
+     \item Eye view arc
+  \end{itemize}
+  \item Max Health
+  \item Health Regen
+  \item Size
+  \item Attack Power
+  \item Defense
+  \item Speed
+  \item Metabolic Cost
+\end{itemize}
+
+Most of the items listed are self explanatory, but a few deserve special attention. Each creature will have a metabolic cost associated with each of its physical characteristics. A faster creature, or a stronger creature, will incur a heavier metabolic cost and therefore require more food to survive. The number of eyes also deserves special note because it inherently changes the structure of the neural network used to determine the creature's behavior.
+\\
+\\
+The program will be structured as a tournament based, generational, evolutionary model.
+
+\section*{Selection}
+
+Selection of individuals for survival from generation to generation will be done by a strict ranking. The ranking will be determined by performance in a tournament. The entire population will be randomly placed in the simulated environment, and the simulation will be run until all individuals have starved. To prevent simulations from running forever, the amount of food released into the environment will be reduced based on the number of remaining individuals, and based on the amount of time that has passed. The amount of time that an individual survives in time-steps will be their fitness, with a higher fitness being desirable. The least fit individuals each generation will be removed, and their places filled by crossover to keep a constant population.
+
+\section*{Crossover}
+
+Selection for crossover will be done roulette style based on the fitness of the parents. Thus an individual with a higher fitness has a higher chance of being selected as a parent. Crossover will be done in two ways. For the physical characteristics, the values for the characteristics will be averaged. Note that the metabolic cost is derived from the other characteristics and is not subject to change via mutation or crossover. When applicable, the neural net weights will also be averaged. However, because of the non-static nature of the neural nets, special steps are required to do crossover between two individuals with non-similar neural nets. The details of this crossover are yet to be determined, but we speculate that the weights in the input layer of the network will be associated with the input organ they originate from. If the new creature has fewer eyes than one of the parents, the weights from the extra eyes will be ignored, whereas eyes that exist in the child but not in either parent will have randomly generated weights. For eyes that existed in one parent but not the other, the weights will be copied from the parent with the eye. If both parents had the same number of eyes, the weights are simply averaged.
+
+\section*{Mutation}
+
+Each generation, after Mutation will be done on each individual in two ways. For a selected individual, each physical characteristic will have a chance to undergo a mutation. The exact nature of each mutation will vary from parameter to parameter, but in general each characteristic will be modified by a percentage of the previous value. For the neural net, each weight in the net will have a small chance of being mutated in a similar fashion.
+
+\section*{Other Details}
+
+The simulation will be visualized through OpenGL. In order to speed up run times to a bearable degree, the population sizes will be kept small, and only one in every N runs will be displayed to the user. The rest will be run without graphics. Depending on run-times for the background simulation, some basic statistics may be printed in a window so the program does not appear to have frozen.
+
+\bibliographystyle{IEEEtran}
+\bibliography{refs}
+
+
+
+%----------------------------------------------------------------------------------------
+
+\end{document}

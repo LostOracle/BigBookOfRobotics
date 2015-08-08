@@ -1,0 +1,12 @@
+% !TEX root = HowToRobot.tex
+
+\chapter{ROS Intro and Architecture}
+\label{chap:rosarchitecture}
+
+\section{What is ROS?}
+
+There are a dozen tutorials online that do a better job of giving beginner's ROS tutorials. I'm not going to try to repeat that here. However, there are some things I've learned about ROS that are worth passing on that seem to get forgotten in the tutorials.
+
+First, ROS isn't big, scary, or even all that complex (for the user). Fundamentally, all ROS does for you is pass messages. Just think of it as a communication system for mini-programs you write, called Nodes. The channels they communicate over are called Topics. There is a main ROS control program typically called the Master, or roscore.
+
+It is definitely true that there are very big and scary ROS constructs out there. The TF library for one. Hector SLAM for another. These are not, however, part of ROS. They just \textit{use} ROS. That being said, ROS does take some getting used to. Particularly things like the CMakeList

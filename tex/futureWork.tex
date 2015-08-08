@@ -1,0 +1,43 @@
+%! TEX root = Proposal.tex
+
+\chapter{Future Work}
+\label{futureWork}
+
+There are many interesting paths this project can take, such as:
+
+\begin{itemize}[noitemsep]
+	\item Exploratory Motion for Critters with Eyes
+	\item Weighted Eye Crossover
+	\item Toroidal Environment
+	\item 3D Environment
+	\item Environment Conditions
+	\item Complex Food Sources
+	\item Obstacles 
+	\item Subranking
+\end{itemize} 
+
+\section{Exploratory Motion}
+In the simulations run, many of the critters would spin in place or in a small circle, much like young ballerinas. This doesn't really make sense for critters with eyes. Introducing some sort of rudimentary motion control to kickstart the ANN for critters with eyes might produce more interesting results, prevent the eyes from dying off so quickly and force them to evolve motion in a more intelligent manner. Perhaps they could start off with a Brownian Walk and evolve into smooth curves. 
+
+\section{Crossover}
+A modification to the crossover eye method could speed convergence or find a local extrema.  The chance to inherit an eye would be weighted in favor of the higher ranked parent.  \\
+
+\section{Toroidal Environment}
+An Asteroid's like toroidal environment would prevent the critters from getting stuck in the corners. Another affect would be to allow the prey in a predator-prey relationship to run away without trapping themselves into an 'unseen' corner.\\
+
+\section{3D Environment} 
+A three dimensional environment would significantly increase the math done behind the scene. It's an easy extension but significant amounts of code would need to be re-written for collision, motion, the ANN, eyes, drawing, etc.\\
+
+\section{Environment Conditions}
+To simulate real life, the environment could have properties and those properties could be changed over time. Properties could be temperature variations, visibility variations and water salinity. Temperature variations could cause populations to evolve in warmer or cooler areas and when a temperature flux is induced, they may die off or thrive. Visibility variations would have a direct impact on the cost of eyes. Creatures that can see well in poor visibility would have more energy allocated to eyes so they might move slower but become better at luring prey to them. Water salinity would have similar repercussions as temperature.\\
+
+
+\section{Complex Food Sources}
+More complex food source schema could have interesting impacts on the environment. One method is where the critter has a food conversion efficiency and the food source has a nutritional value. This would force the critter to increase their food conversion efficiency and to identify food sources with a better nutritional value. (A method that seems to have been lost on many CS students.) \\
+
+\section{Obstacles}
+Implementing obstacles would not be terribly difficult. There would be two types, benign and malicious. Benign obstacles would do no damage to a critter running into it but could also offer shelter to a prey critter. Offering shelter would definitely work better in a three dimensional environment and with a less simplistic model of physics. A malicious obstacle would injure the critter. If a predator-prey behavior emerges, perhaps the predators could develop a herd like mentality to run prey into the malicious obstacle to prevent damage to themselves. To implement these change, some underlying code structures would need to be changed in order need to identify the difference between benign and malicious. \\
+
+
+\section{Subranking}
+Currently, the critters are ranked solely on lifetime. Initially, many creatures die off due to the lifetime points running out but have taken some damage from blindly running into other creatures. Our sorting method may rank a critter that lived the entire time but died with one or two health points left over a critter that also lived the same amount of time but died at full health. Ideally, the one with full health would be ranked above the one with a few points left at the end. \\

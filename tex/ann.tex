@@ -1,0 +1,15 @@
+% !TEX root = Proposal.tex
+
+\chapter{Evolving Behavior}
+\label{chap:ann}
+
+\section{Structure}
+The Critters use an Artificial Neural Network (ANN) to determine their behavior. To put it academically, the ANN is a single layer feed forward perceptron net which uses a sigmoid activation that has been stretched and shifted to allow values between -1 and 1. To put it more simply, each Critter has a tiny brain with a series of input cells and output cells. The input cells include 4 static cells which tell the Critter about its current health and life points. There are also 2 input cells for each eye, which tell the critter whether or not the eye detects an enemy, and whether or not the eye detects food. There are three outputs which tell the Critter to move forward or backward, left or right, or to turn left or right. To reiterate, the structure of the ANN for each Critter was not static, and the number of input nodes varies with the number of eyes.
+
+\section{Crossover}
+Crossover with a non-static ANN was tricky. Different parents could have different numbers of eyes, which meant we couldn't just average values from the parents' ANNs to create a child. To get around this, each Eye had its own miniature ANN with 3 outputs, and to get the output for the whole ANN, we just took the sum of the results from all of the eyes and the four static input nodes. This way eyes could be dropped or added from the network without changing the rest of the net.
+
+When preforming crossover, the child has a chance to inherit eyes from the parents. If both parents have 1 eye, the child has a 45\% chance to inherit each parent's Eye, including the ANN. There is also a 10\% chance to not inherit an eye. This continues for each Eye that both parents possess. For example, if one parent has 2 eyes, and one has 3, the child has a 45\% chance to inherit from parent 1 or 2 for the first 2 eyes. For the third eye, the child has a 50\% chance to inherit from the parent with 3 eyes, and a 50\% chance to inherit no eye.
+
+\section{Mutation}
+In contrast with Crossover, mutation for the eyes and the Neural Net The characteristics for each eye, and the weights in the ANN for each Eye are mutated using the guidelines in Chapter\autoref{chap:reproduction}. 
