@@ -1,5 +1,5 @@
 \contentsline {chapter}{Title}{i}{Doc-Start}
-\contentsline {chapter}{Contents}{i}{chapter*.1}
+\contentsline {chapter}{Contents}{ii}{chapter*.1}
 \contentsline {chapter}{List of Figures}{iii}{chapter*.2}
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Purpose}{1}{section.1.1}
@@ -22,23 +22,74 @@
 \contentsline {subsection}{\numberline {3.1.6}Voltage Divider}{13}{subsection.3.1.6}
 \contentsline {section}{\numberline {3.2}Batteries}{14}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}The Basics}{14}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Lead Acid Batteries - Pb}{14}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Lithium Polymer - LiPo}{14}{subsection.3.2.3}
-\contentsline {subsection}{\numberline {3.2.4}Other Batteries}{15}{subsection.3.2.4}
-\contentsline {section}{\numberline {3.3}Tips For Not Lighting Things On Fire}{15}{section.3.3}
+\contentsline {subsection}{\numberline {3.2.2}Which Numbers Are Important?}{14}{subsection.3.2.2}
+\contentsline {subsubsection}{Voltage - V}{14}{subsection.3.2.2}
+\contentsline {subsubsection}{Capacity - mAh}{14}{subsection.3.2.2}
+\contentsline {subsubsection}{C}{14}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}Lead Acid Batteries - Pb}{14}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}Lithium Polymer - LiPo}{15}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}Other Batteries}{16}{subsection.3.2.5}
+\contentsline {section}{\numberline {3.3}Tips For Not Lighting Things On Fire}{16}{section.3.3}
 \contentsline {subsubsection}{Turn Off The Power}{16}{section.3.3}
 \contentsline {subsubsection}{Electrical Tape}{16}{section.3.3}
 \contentsline {subsubsection}{Be Careful Around Batteries}{16}{section.3.3}
-\contentsline {subsubsection}{Don't Work When You're Tired}{16}{section.3.3}
-\contentsline {subsubsection}{Ground Loops}{16}{section.3.3}
-\contentsline {subsubsection}{Use the Mult-Meter}{16}{section.3.3}
-\contentsline {chapter}{\numberline {4}Odroid Setup}{17}{chapter.4}
-\contentsline {section}{\numberline {4.1}Purpose Of This Chapter}{17}{section.4.1}
-\contentsline {section}{\numberline {4.2}Before You Begin}{17}{section.4.2}
-\contentsline {section}{\numberline {4.3}Obtain the Fuser}{17}{section.4.3}
-\contentsline {section}{\numberline {4.4}Run The Fuser}{18}{section.4.4}
-\contentsline {section}{\numberline {4.5}Loading The EMMC Image}{18}{section.4.5}
-\contentsline {section}{\numberline {4.6}What Next?}{19}{section.4.6}
-\contentsline {section}{\numberline {4.7}Installing ROS}{19}{section.4.7}
-\contentsline {section}{\numberline {4.8}Common Errors}{20}{section.4.8}
-\contentsline {chapter}{Bibliography}{23}{chapter*.3}
+\contentsline {subsubsection}{Don't Work When You're Tired}{17}{section.3.3}
+\contentsline {subsubsection}{Ground Loops}{17}{section.3.3}
+\contentsline {subsubsection}{Use the Mult-Meter}{17}{section.3.3}
+\contentsline {chapter}{\numberline {4}Odroid Setup}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Purpose Of This Chapter}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Before You Begin}{19}{section.4.2}
+\contentsline {section}{\numberline {4.3}Obtain the Fuser}{19}{section.4.3}
+\contentsline {section}{\numberline {4.4}Run The Fuser}{20}{section.4.4}
+\contentsline {section}{\numberline {4.5}Loading The EMMC Image}{20}{section.4.5}
+\contentsline {section}{\numberline {4.6}What Next?}{21}{section.4.6}
+\contentsline {section}{\numberline {4.7}Installing ROS}{21}{section.4.7}
+\contentsline {section}{\numberline {4.8}Common Errors}{22}{section.4.8}
+\contentsline {chapter}{\numberline {5}ROS Intro and Architecture}{25}{chapter.5}
+\contentsline {section}{\numberline {5.1}What is ROS?}{25}{section.5.1}
+\contentsline {section}{\numberline {5.2}ROS Lingo}{25}{section.5.2}
+\contentsline {subsubsection}{Node}{25}{section.5.2}
+\contentsline {subsubsection}{Master}{25}{lstnumber.-20.2}
+\contentsline {subsubsection}{Publisher}{26}{lstnumber.-21.1}
+\contentsline {subsubsection}{Subscriber}{26}{lstnumber.-21.1}
+\contentsline {subsubsection}{Topic}{26}{lstnumber.-21.1}
+\contentsline {subsubsection}{Workspace}{26}{lstnumber.-22.2}
+\contentsline {subsubsection}{Service}{26}{lstnumber.-22.2}
+\contentsline {subsubsection}{Launch File}{26}{lstnumber.-22.2}
+\contentsline {subsubsection}{Namespace}{26}{lstnumber.-22.2}
+\contentsline {subsubsection}{Parameters}{26}{lstnumber.-22.2}
+\contentsline {section}{\numberline {5.3}Launch Files}{27}{section.5.3}
+\contentsline {subsubsection}{<launch>}{28}{lstnumber.-23.50}
+\contentsline {subsubsection}{<group ns="\$(env ROBOT)">}{28}{lstnumber.-23.50}
+\contentsline {subsubsection}{<node...>}{28}{lstnumber.-23.50}
+\contentsline {subsubsection}{pkg, name, type}{28}{lstnumber.-23.50}
+\contentsline {subsubsection}{output="screen"}{28}{lstnumber.-23.50}
+\contentsline {subsubsection}{<param>}{28}{lstnumber.-23.50}
+\contentsline {subsubsection}{<remap>}{28}{lstnumber.-23.50}
+\contentsline {section}{\numberline {5.4}Running Nodes Manually}{28}{section.5.4}
+\contentsline {subsubsection}{\_\_name}{29}{lstnumber.-25.1}
+\contentsline {subsubsection}{\_\_ns}{29}{lstnumber.-25.1}
+\contentsline {subsubsection}{\_\_log}{29}{lstnumber.-25.1}
+\contentsline {subsubsection}{\_\_ip and \_\_hostname}{29}{lstnumber.-25.1}
+\contentsline {subsubsection}{\_\_master}{29}{lstnumber.-25.1}
+\contentsline {section}{\numberline {5.5}Running ROS}{29}{section.5.5}
+\contentsline {subsubsection}{Sourcing}{29}{section.5.5}
+\contentsline {subsubsection}{Exports}{30}{lstnumber.-27.1}
+\contentsline {subsubsection}{Firewall}{30}{lstnumber.-31.1}
+\contentsline {section}{\numberline {5.6}Making a ROS Robot}{30}{section.5.6}
+\contentsline {chapter}{\numberline {6}The Robot}{31}{chapter.6}
+\contentsline {section}{\numberline {6.1}What Is A Robot?}{31}{section.6.1}
+\contentsline {section}{\numberline {6.2}Locomotion}{31}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}Brushed DC Motors}{31}{subsection.6.2.1}
+\contentsline {subsubsection}{Torque}{31}{subsection.6.2.1}
+\contentsline {subsubsection}{Voltage}{31}{subsection.6.2.1}
+\contentsline {subsubsection}{Current}{32}{subsection.6.2.1}
+\contentsline {subsubsection}{RPM}{32}{subsection.6.2.1}
+\contentsline {subsubsection}{Gear Ratio}{32}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}Brushless DC Motors}{32}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}Stepper Motors}{32}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}Servos}{32}{subsection.6.2.4}
+\contentsline {section}{\numberline {6.3}Power}{33}{section.6.3}
+\contentsline {subsection}{\numberline {6.3.1}Regulators}{33}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {6.3.2}DC-DC Converters}{33}{subsection.6.3.2}
+\contentsline {chapter}{Bibliography}{35}{chapter*.3}

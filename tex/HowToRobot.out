@@ -21,17 +21,35 @@
 \BOOKMARK [2][-]{subsection.3.1.6}{Voltage Divider}{section.3.1}% 21
 \BOOKMARK [1][-]{section.3.2}{Batteries}{chapter.3}% 22
 \BOOKMARK [2][-]{subsection.3.2.1}{The Basics}{section.3.2}% 23
-\BOOKMARK [2][-]{subsection.3.2.2}{Lead Acid Batteries - Pb}{section.3.2}% 24
-\BOOKMARK [2][-]{subsection.3.2.3}{Lithium Polymer - LiPo}{section.3.2}% 25
-\BOOKMARK [2][-]{subsection.3.2.4}{Other Batteries}{section.3.2}% 26
-\BOOKMARK [1][-]{section.3.3}{Tips For Not Lighting Things On Fire}{chapter.3}% 27
-\BOOKMARK [0][-]{chapter.4}{Odroid Setup}{}% 28
-\BOOKMARK [1][-]{section.4.1}{Purpose Of This Chapter}{chapter.4}% 29
-\BOOKMARK [1][-]{section.4.2}{Before You Begin}{chapter.4}% 30
-\BOOKMARK [1][-]{section.4.3}{Obtain the Fuser}{chapter.4}% 31
-\BOOKMARK [1][-]{section.4.4}{Run The Fuser}{chapter.4}% 32
-\BOOKMARK [1][-]{section.4.5}{Loading The EMMC Image}{chapter.4}% 33
-\BOOKMARK [1][-]{section.4.6}{What Next?}{chapter.4}% 34
-\BOOKMARK [1][-]{section.4.7}{Installing ROS}{chapter.4}% 35
-\BOOKMARK [1][-]{section.4.8}{Common Errors}{chapter.4}% 36
-\BOOKMARK [0][-]{chapter*.3}{Bibliography}{}% 37
+\BOOKMARK [2][-]{subsection.3.2.2}{Which Numbers Are Important?}{section.3.2}% 24
+\BOOKMARK [2][-]{subsection.3.2.3}{Lead Acid Batteries - Pb}{section.3.2}% 25
+\BOOKMARK [2][-]{subsection.3.2.4}{Lithium Polymer - LiPo}{section.3.2}% 26
+\BOOKMARK [2][-]{subsection.3.2.5}{Other Batteries}{section.3.2}% 27
+\BOOKMARK [1][-]{section.3.3}{Tips For Not Lighting Things On Fire}{chapter.3}% 28
+\BOOKMARK [0][-]{chapter.4}{Odroid Setup}{}% 29
+\BOOKMARK [1][-]{section.4.1}{Purpose Of This Chapter}{chapter.4}% 30
+\BOOKMARK [1][-]{section.4.2}{Before You Begin}{chapter.4}% 31
+\BOOKMARK [1][-]{section.4.3}{Obtain the Fuser}{chapter.4}% 32
+\BOOKMARK [1][-]{section.4.4}{Run The Fuser}{chapter.4}% 33
+\BOOKMARK [1][-]{section.4.5}{Loading The EMMC Image}{chapter.4}% 34
+\BOOKMARK [1][-]{section.4.6}{What Next?}{chapter.4}% 35
+\BOOKMARK [1][-]{section.4.7}{Installing ROS}{chapter.4}% 36
+\BOOKMARK [1][-]{section.4.8}{Common Errors}{chapter.4}% 37
+\BOOKMARK [0][-]{chapter.5}{ROS Intro and Architecture}{}% 38
+\BOOKMARK [1][-]{section.5.1}{What is ROS?}{chapter.5}% 39
+\BOOKMARK [1][-]{section.5.2}{ROS Lingo}{chapter.5}% 40
+\BOOKMARK [1][-]{section.5.3}{Launch Files}{chapter.5}% 41
+\BOOKMARK [1][-]{section.5.4}{Running Nodes Manually}{chapter.5}% 42
+\BOOKMARK [1][-]{section.5.5}{Running ROS}{chapter.5}% 43
+\BOOKMARK [1][-]{section.5.6}{Making a ROS Robot}{chapter.5}% 44
+\BOOKMARK [0][-]{chapter.6}{The Robot}{}% 45
+\BOOKMARK [1][-]{section.6.1}{What Is A Robot?}{chapter.6}% 46
+\BOOKMARK [1][-]{section.6.2}{Locomotion}{chapter.6}% 47
+\BOOKMARK [2][-]{subsection.6.2.1}{Brushed DC Motors}{section.6.2}% 48
+\BOOKMARK [2][-]{subsection.6.2.2}{Brushless DC Motors}{section.6.2}% 49
+\BOOKMARK [2][-]{subsection.6.2.3}{Stepper Motors}{section.6.2}% 50
+\BOOKMARK [2][-]{subsection.6.2.4}{Servos}{section.6.2}% 51
+\BOOKMARK [1][-]{section.6.3}{Power}{chapter.6}% 52
+\BOOKMARK [2][-]{subsection.6.3.1}{Regulators}{section.6.3}% 53
+\BOOKMARK [2][-]{subsection.6.3.2}{DC-DC Converters}{section.6.3}% 54
+\BOOKMARK [0][-]{chapter*.3}{Bibliography}{}% 55

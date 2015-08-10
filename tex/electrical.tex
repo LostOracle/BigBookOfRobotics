@@ -137,7 +137,7 @@ There's one last circuit I want to mention because it becomes very important whe
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.75]{voltagedivider.png}
-\label{fig:diffdrive}
+\label{fig:voltagedivider}
 \caption{Differential Drive}
 \end{figure}
 
@@ -150,10 +150,28 @@ R_2 = R_1*\frac{1}{(\frac{V_{in}}{V_{out}}-1)}
 \end{equation}
 
 \section{Batteries}
+\label{sec:batteries}
 
 \subsection{The Basics}
 
 We have had a lot of problems dealing with batteries over the years. Partly because people are lazy, but mostly because they don't understand how batteries work or how to properly maintain them. All batteries are basically slow, controlled, chemical reactions. They are not magical devices that store and dispense electric charge. The closest thing to that is a capacitor, which is two metal plates with an insulator between them. By applying voltage, you charged the plates, storing energy in the form of actual electric charge. However, capacitors tend to discharge all of their stored energy at once. In adddition, the total energy they can store is far less than most batteries. Batteries, on the other hand, store energy in the form of chemical potential energy. This is far more stable than storing raw electric charge, but it does lead to a few problems. The big on is that, since the energy storage relies on chemistry, temperature is important. Being stored in a place that is too hot or too cold can cause a battery to burst, or drain it. Another is that, over time, the chemistry can get disrupted, causing the battery's maximum storage potential to decline.
+
+\subsection{Which Numbers Are Important?}
+
+Now you know what voltage, current, and resistance all mean, but how do you use them in practice? 
+
+\subsubsection{Voltage - V}
+
+We'll start with voltage because that's the easiest one to handle. You want to make sure the voltage your batteries produces matches the voltage rating for the things you want to power: motors, cpu, sensors, etc. However, there's another consideration to make. You almost never want your batteries directly connected to your sensitive electronics. You always want a regulator of some sort in between. Why? As you drain a battery, the voltage will fluctuate. This can cause damage to unshielded electronics. We'll talk about regulators in Section \ref{sec:regulators}. In addition to the power fluctuations, you rarely have motors that you want to drive with the same voltage as the computer. In practice, you'll want to match your main battery voltage to the voltage of the motors you want to power, and then use regulators to smooth and reduce the voltage for the other components.
+
+\subsubsection{Capacity - mAh}
+
+This is the best measure of how much actual energy the battery can hold. To put it simply, a 1000mAh battery could sustain a drain of 1A for 1 hour before being depleted. If you draw 2A it will only last half an hour. At 0.5A, two hours. It's a very silly unit when you think about it, but it makes the math easy.
+
+\subsubsection{C}
+
+Most batteries have a C rating. This is a somewhat cryptic value that tells you how quickly a battery can discharge without damaging itself. This is not a limit on how much current the battery can draw. Remember Ohm's law? You thought it wasn't important, didn't you? The thing is, Ohm's law will dictate the current that gets drawn from the battery. The C rating just tells you what is safe. The tricky bit is that the actual safe rate of discharge depends on the size of the battery. Weird right? Here's the simple way to think about it. The amount of continuous current drain a battery can handle without damaging itself is obtained by multiplying the C rating with the battery capacity. For instance, a 1500mAh battery with a 5C rating can handle a continuous drain of 30,000mA or 30A.
+
 
 \subsection{Lead Acid Batteries - Pb}
 
@@ -163,7 +181,7 @@ Lead acid batteries are very stable. That's why we use them in cars. They also h
 
 In the robots I built during my time on the team, we used these most commonly. They are light-weight, small, and can store a great deal of power. A LiPo battery generally consists of some number of cells. Each cell has a rated voltage of 3.7V. Batteries with more voltage are built by putting multiple cells in series. This voltage has to do with the internal chemistry. LiPo batteries are not nearly as stable as lead acid. There are three major concerns when dealing with a LiPo. First, only charge using a LiPo charger. There are some extra pins on a LiPo battery that tell the charger important information about the cells within. Second, make sure you look up the rating for charging a LiPo. The general rule of thumb is that a LiPo can be charged at the rate of 1C. If you have a 1500 mAh battery, you can charge it at 1.5A. Charging it slower is fine. Charging faster can cause the LiPo to heat up, swell, and potentially burst. When the LiPo bursts, the chemicals inside will spontaneously burn, creating fire, pressure, and heat. Seriously bad news. Third, never ever cut or puncture a LiPo. An externally ruptured LiPo is bad news, but one that ruptures internally, or without a good pressure relief, is a thermal grenade.
 
-That all said, LiPo batteries are pretty safe if you follow the guidelines I set out for charging. There are two more things to worry about. 3.7V is the rated voltage for a cell, but when you charge, you generally charge to about 4.2V - the charger will handle this. Never manually overcharge the LiPo. However, unlike a lead-acid battery, letting the charge get too low in a LiPo will permanently damage it. The minimum safe level for a single cell is 3V. Always monitor the voltage of LiPo batteries you are using and ensure they don't drop below this level. The difficult part is, LiPo voltage doesn't drop linearly. Figure \ref{lipovoltage} shows voltage versus charge for a LiPo. As you can see from the graph, you have to monitor the battery voltage very carefully, because it decreases rapidly once the charge gets low.
+That all said, LiPo batteries are pretty safe if you follow the guidelines I set out for charging. There are two more things to worry about. 3.7V is the rated voltage for a cell, but when you charge, you generally charge to about 4.2V - the charger will handle this. Never manually overcharge the LiPo. However, unlike a lead-acid battery, letting the charge get too low in a LiPo will permanently damage it. The minimum safe level for a single cell is 3V. Always monitor the voltage of LiPo batteries you are using and ensure they don't drop below this level. The difficult part is, LiPo voltage doesn't drop linearly. Figure \ref{fig:lipovoltage} shows voltage versus charge for a LiPo. As you can see from the graph, you have to monitor the battery voltage very carefully, because it decreases rapidly once the charge gets low.
 
 \begin{figure}[h]
 \centering

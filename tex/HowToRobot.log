@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.7.19)  8 AUG 2015 01:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.7.19)  9 AUG 2015 23:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -946,12 +946,6 @@ Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 \titlewidthfirst=\dimen230
 )) (./HowToRobot.aux
 
-LaTeX Warning: Label `fig:diffdrive' multiply defined.
-
-
-LaTeX Warning: Label `fig:diffdrive' multiply defined.
-
-
 LaTeX Warning: Label `eqn:solveforr' multiply defined.
 
 )
@@ -1078,19 +1072,19 @@ LaTeX Info: Redefining \nameref on input line 18.
 {g:/TexLive/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
 
 ]
-(./HowToRobot.toc)
+(./HowToRobot.toc [1
+
+])
 \tf@toc=\write6
 \openout6 = `HowToRobot.toc'.
 
- [1
-
-] [2
-
-] (./HowToRobot.lof)
+ [2] (./HowToRobot.lof)
 \tf@lof=\write7
 \openout7 = `HowToRobot.lof'.
 
- [3] [4
+ [3
+
+] [4
 
 ] (./intro.tex
 Chapter 1.
@@ -1120,7 +1114,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 12--13
 
  []
 
-[3] <Differential_Drive.png, id=251, 339.2675pt x 370.38374pt>
+[3] <Differential_Drive.png, id=357, 339.2675pt x 370.38374pt>
 File: Differential_Drive.png Graphic file (type png)
 
 <use Differential_Drive.png>
@@ -1135,10 +1129,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Warning: Reference `eqn:diffdriveforward' on page 5 undefined on input li
 ne 71.
 
-
-LaTeX Warning: Reference `fig:ackermann' on page 5 undefined on input line 79.
-
-<Ackermann_Drive2.png, id=257, 134.5025pt x 226.8475pt>
+<Ackermann_Drive2.png, id=364, 134.5025pt x 226.8475pt>
 File: Ackermann_Drive2.png Graphic file (type png)
 
 <use Ackermann_Drive2.png>
@@ -1155,13 +1146,13 @@ LaTeX Warning: `h' float specifier changed to `ht'.
                                                   \fi \fi 
 l.92 \subsection
                 {Skid Steer} <./Differential_Drive.png>]
-<skid_steer_drive.png, id=264, 392.46625pt x 252.945pt>
+<skid_steer_drive.png, id=371, 392.46625pt x 252.945pt>
 File: skid_steer_drive.png Graphic file (type png)
 
 <use skid_steer_drive.png>
 Package pdftex.def Info: skid_steer_drive.png used on input line 98.
 (pdftex.def)             Requested size: 235.48155pt x 151.76816pt.
- <smprobot.png, id=266, 5331.92pt x 2999.205pt>
+ <smprobot.png, id=373, 5331.92pt x 2999.205pt>
 File: smprobot.png Graphic file (type png)
 
 <use smprobot.png>
@@ -1192,7 +1183,7 @@ l.112 \subsection
 LaTeX Warning: Reference `fig:mecaumrobot' on page 7 undefined on input line 11
 4.
 
-<mecanumrobot.png, id=274, 1626.075pt x 1104.125pt>
+<mecanumrobot.png, id=381, 1626.075pt x 1104.125pt>
 File: mecanumrobot.png Graphic file (type png)
  <use mecanumrobot.png>
 Package pdftex.def Info: mecanumrobot.png used on input line 118.
@@ -1201,7 +1192,7 @@ Package pdftex.def Info: mecanumrobot.png used on input line 118.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<mecanumwheels.png, id=275, 458.71375pt x 456.70625pt>
+<mecanumwheels.png, id=382, 458.71375pt x 456.70625pt>
 File: mecanumwheels.png Graphic file (type png)
  <use mecanumwheels.png>
 Package pdftex.def Info: mecanumwheels.png used on input line 125.
@@ -1233,14 +1224,14 @@ l.3 \chapter
 Chapter 3.
 [9
 
-] <seriesresistors.png, id=295, 391.4625pt x 106.3975pt>
+] <seriesresistors.png, id=402, 391.4625pt x 106.3975pt>
 File: seriesresistors.png Graphic file (type png)
 
 <use seriesresistors.png>
 Package pdftex.def Info: seriesresistors.png used on input line 47.
 (pdftex.def)             Requested size: 293.59615pt x 79.79791pt.
 
-<parallelresistors.png, id=298, 302.12875pt x 177.66376pt>
+<parallelresistors.png, id=405, 302.12875pt x 177.66376pt>
 File: parallelresistors.png Graphic file (type png)
 
 <use parallelresistors.png>
@@ -1251,21 +1242,17 @@ Package pdftex.def Info: parallelresistors.png used on input line 56.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 
-LaTeX Warning: Reference `fig:voltagedivider' on page 10 undefined on input lin
-e 63.
-
-
 LaTeX Warning: Reference `eqn:parallelresistors' on page 10 undefined on input 
 line 63.
 
-<parallelresistorsexample.png, id=301, 153.57375pt x 133.24782pt>
+<parallelresistorsexample.png, id=409, 153.57375pt x 133.24782pt>
 File: parallelresistorsexample.png Graphic file (type png)
 
 <use parallelresistorsexample.png>
 Package pdftex.def Info: parallelresistorsexample.png used on input line 70.
 (pdftex.def)             Requested size: 115.18002pt x 99.93561pt.
 
-<parallelresistorsexamplemerged.png, id=302, 153.57375pt x 133.24782pt>
+<parallelresistorsexamplemerged.png, id=410, 153.57375pt x 133.24782pt>
 File: parallelresistorsexamplemerged.png Graphic file (type png)
 
 <use parallelresistorsexamplemerged.png>
@@ -1298,14 +1285,14 @@ l.101
                                                   \fi \fi 
 l.101 
        <./parallelresistors.png> <./parallelresistorsexample.png> <./parallelre
-sistorsexamplemerged.png>] <ledcircuit.png, id=327, 150.5625pt x 150.5625pt>
+sistorsexamplemerged.png>] <ledcircuit.png, id=434, 150.5625pt x 150.5625pt>
 File: ledcircuit.png Graphic file (type png)
 
 <use ledcircuit.png>
 Package pdftex.def Info: ledcircuit.png used on input line 108.
 (pdftex.def)             Requested size: 112.92159pt x 112.92159pt.
 
-<ledcircuitvoltagedrop.png, id=328, 150.5625pt x 150.5625pt>
+<ledcircuitvoltagedrop.png, id=435, 150.5625pt x 150.5625pt>
 File: ledcircuitvoltagedrop.png Graphic file (type png)
 
 <use ledcircuitvoltagedrop.png>
@@ -1324,11 +1311,7 @@ l.132
                                                   \fi \fi 
 l.132 
        <./ledcircuit.png> <./ledcircuitvoltagedrop.png>]
-
-LaTeX Warning: Reference `fig:voltagedivider' on page 13 undefined on input lin
-e 135.
-
-<voltagedivider.png, id=338, 220.825pt x 284.06125pt>
+<voltagedivider.png, id=446, 220.825pt x 284.06125pt>
 File: voltagedivider.png Graphic file (type png)
  <use voltagedivider.png>
 Package pdftex.def Info: voltagedivider.png used on input line 139.
@@ -1344,25 +1327,24 @@ Underfull \vbox (badness 4266) has occurred while \output is active []
 l.157 
        <./voltagedivider.png>]
 
-LaTeX Warning: Reference `lipovoltage' on page 14 undefined on input line 166.
+LaTeX Warning: Reference `sec:regulators' on page 14 undefined on input line 16
+4.
 
-<lipovoltage.png, id=346, 401.5pt x 301.125pt>
+[14] <lipovoltage.png, id=460, 401.5pt x 301.125pt>
 File: lipovoltage.png Graphic file (type png)
  <use lipovoltage.png>
-Package pdftex.def Info: lipovoltage.png used on input line 170.
+Package pdftex.def Info: lipovoltage.png used on input line 187.
 (pdftex.def)             Requested size: 301.12425pt x 225.84319pt.
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[14] [15pdfTeX warning (ext4): destination with the same identifier (name{figur
-e.3.8}) has been already used, duplicate ignored
+[15pdfTeX warning (ext4): destination with the same identifier (name{figure.3.8
+}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.187 \subsubsection{Turn Off The Power}
-                                         <./lipovoltage.png (PNG copy)>])
-(./odroidsetup.tex [16]
+l.193 
+       <./lipovoltage.png (PNG copy)>] [16]) (./odroidsetup.tex [17] [18
+
+]
 Chapter 4.
 (g:/TexLive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2015/06/04 1.6 listings language file
@@ -1377,16 +1359,14 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 24.
- [17
-
-]
+ [19]
 Overfull \hbox (268.07047pt too wide) in paragraph at lines 44--45
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [][][][][][][][] 
  []
 
-[18]
+[20]
 Overfull \hbox (178.09175pt too wide) in paragraph at lines 123--124
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
@@ -1412,47 +1392,73 @@ Overfull \hbox (190.08891pt too wide) in paragraph at lines 141--142
 ][][][][][][][][][][][][][][][][][][][] 
  []
 
-[19]
+[21]
 Overfull \hbox (112.10736pt too wide) in paragraph at lines 182--183
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-)
+) (./rosarch.tex [22] [23] [24
+
+]
+Chapter 5.
+[25]
+
+LaTeX Warning: Reference `sec:makeitgo' on page 26 undefined on input line 78.
+
+
+LaTeX Warning: Reference `lst:launchfile' on page 26 undefined on input line 83
+.
+
+[26]
+Overfull \hbox (196.0875pt too wide) in paragraph at lines 130--131
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][] 
+ []
+
+[27]
+
+LaTeX Warning: Reference `sec:bringupservice' on page 28 undefined on input lin
+e 146.
+
+[28] [29]) (./therobot.tex [30]
+Chapter 6.
+[31
+
+]
+
+LaTeX Warning: Reference `sec:batteries' on page 32 undefined on input line 54.
+
+
+[32])
 No file HowToRobot.bbl.
-(./refs.bib [20] [21] [22
+(./refs.bib [33] [34
 
-]) [23]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 70.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 70.
+]) [35]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 71.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 71.
  (./HowToRobot.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 70.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 70.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 71.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 71.
+Package rerunfilecheck Info: File `HowToRobot.out' has not changed.
+(rerunfilecheck)             Checksum: C29EF0B6D1C4BA95DB0BE1E345ABC592;3410.
 
-
-Package rerunfilecheck Warning: File `HowToRobot.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `HowToRobot.out':
-(rerunfilecheck)             Before: 24B08EDDF992A2BF44DAFE8E7E0CF5FC;2099
-(rerunfilecheck)             After:  74B3FB40234BD819D7FAF18A7BB437CF;2277.
 
 LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 70.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 71.
  ) 
 Here is how much of TeX's memory you used:
- 23626 strings out of 493093
- 411062 string characters out of 6140786
- 587903 words of memory out of 5000000
- 26443 multiletter control sequences out of 15000+600000
+ 23817 strings out of 493093
+ 413645 string characters out of 6140786
+ 598187 words of memory out of 5000000
+ 26515 multiletter control sequences out of 15000+600000
  20484 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,17n,56p,3291b,1269s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 64i,17n,56p,3291b,1709s stack positions out of 5000i,500n,10000p,200000b,80000s
 {g:/TexLive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{g:/TexLive/t
 exmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<g:/TexLive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmmi10.pfb><g:/TexLive/texmf-dist/fonts/type1/public
@@ -1467,10 +1473,10 @@ dist/fonts/type1/public/cm-super/sfbx2074.pfb><g:/TexLive/texmf-dist/fonts/type
 1/public/cm-super/sfrm1000.pfb><g:/TexLive/texmf-dist/fonts/type1/public/cm-sup
 er/sfrm1200.pfb><g:/TexLive/texmf-dist/fonts/type1/public/cm-super/sfti1000.pfb
 ><g:/TexLive/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on HowToRobot.pdf (29 pages, 26612955 bytes).
+Output written on HowToRobot.pdf (41 pages, 26676663 bytes).
 PDF statistics:
- 564 PDF objects out of 1000 (max. 8388607)
- 489 compressed objects within 5 object streams
- 162 named destinations out of 1000 (max. 500000)
- 355 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 836 PDF objects out of 1000 (max. 8388607)
+ 746 compressed objects within 8 object streams
+ 275 named destinations out of 1000 (max. 500000)
+ 523 words of extra memory for PDF output out of 10000 (max. 10000000)
 

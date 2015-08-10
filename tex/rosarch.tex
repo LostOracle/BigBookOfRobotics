@@ -9,4 +9,288 @@ There are a dozen tutorials online that do a better job of giving beginner's ROS
 
 First, ROS isn't big, scary, or even all that complex (for the user). Fundamentally, all ROS does for you is pass messages. Just think of it as a communication system for mini-programs you write, called Nodes. The channels they communicate over are called Topics. There is a main ROS control program typically called the Master, or roscore.
 
-It is definitely true that there are very big and scary ROS constructs out there. The TF library for one. Hector SLAM for another. These are not, however, part of ROS. They just \textit{use} ROS. That being said, ROS does take some getting used to. Particularly things like the CMakeList
+It is definitely true that there are very big and scary ROS constructs out there. The TF library for one. Hector SLAM for another. These are not, however, part of ROS. They just \textit{use} ROS. There are some excellent "first program" tutorials on the ROS wiki, but it is really more of a reference than a guide.
+
+\section{ROS Lingo}
+
+There are a few important terms in ROS. They have very precise definitions, but I've summarized the easy version for a few of the more common terms here:
+
+\subsubsection{Node}
+
+A ROS Node is a single computational unit. Generally, this is a single process, but you can have a single node launch multiple threads if you wish. Usually, this is some chunk of code written in Python or C++, although other languages are supported.
+
+You can see which nodes are currently active, and see some information about the node using:
+
+\begin{lstlisting}[language=bash]
+  \$ rosnode list
+  \$ rosnode info <node>
+\end{lstlisting}
+
+\subsubsection{Master}
+
+The master is a special node, started by running the command:
+
+\begin{lstlisting}[language=bash]
+  \$ roscore
+\end{lstlisting}
+
+The master is essential to running all other ROS commands. This node is responsible for setting up channels of communication between the other nodes in the system. However, it does not take an active role in that communication once it is established.
+
+\subsubsection{Publisher}
+
+A publisher is a type of node that publishes information, making it available to other nodes.
+
+\subsubsection{Subscriber}
+
+A subscriber is a type of node that consumes information from publishers.
+
+\subsubsection{Topic}
+
+A topic is a named communication channel. This is the mechanism by which publishers and subscribers produce or consume information. Any number of nodes can publish to a single topic, and any number can subscribe to it. These topics are almost always one-directional. If you have two nodes that talk back and forth, you should use two different topics; one for each direction of information flow.
+
+A topic is intended for long-term, continuous communication. For one-shot, or very infrequent communication, use a service.
+
+You can view which topics are currently active and get information about them using:
+
+\begin{lstlisting}[language=bash]
+  \$ rostopic list
+  \$ rostopic info <topic>
+\end{lstlisting}
+
+\subsubsection{Workspace}
+
+A workspace is a directory structure in which you will do your work when you want to compile and run your own ROS nodes. There is an excellent tutorial about setting up your first workspace at \url{http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment}. 
+
+\subsubsection{Service}
+
+A service is sort of like a special, one-shot communication between nodes. This is generally used for something like buttons that the robot must respond to when pressed. The robots in the lab often have a "safe-start" topic, which enables the motor controllers. Services should not be used for frequent communication.
+
+\subsubsection{Launch File}
+
+A launch file is an .xml document. It is essentially a script for starting up a master node and several other nodes. It also makes it very easy to run nodes with arguments. In short, if you end up running more than one node together, you'll want to make a launch file. Refer to Section \ref{sec:launchfiles} for an example.
+
+\subsubsection{Namespace}
+
+A namespace is a way to group related nodes and topics. Generally, we create a namespace for each robot. That way, if multiple robots were running on the same network, we avoid naming collisions with the nodes and topics. For example, every node and topic created in the Mecanum launch file will show up as /mecanum/<node>. Namespaces can be nested.
+
+\subsubsection{Parameters}
+
+Most nodes have parameters, much like command line arguments in C/C++. In ROS, these parameters are handled as key-value pairs. Each parameter has a name and a value. One example is the joy topic name, addressed in Section \ref{sec:makeitgo}.
+
+\section{Launch Files}
+\label{sec:launchfiles}
+
+Launch files are essential when putting together a bunch of nodes to run a robot. Listing \ref{lst:launchfile} shows the launch file used by both SMP robots.
+
+\begin{lstlisting}[language=bash]
+\label{lst:launchfile}
+\caption{SMP Launch File}
+<?xml version="1.0"?>
+<launch>
+  <group ns="$(env ROBOT)">
+    <node pkg="nodelet" name="nodelet_manager" type="nodelet"
+          args="manager" output="screen" />
+
+    <node name="joy_to_twist" pkg="joy_to_twist" type="joy_to_twist_node"
+          output="screen">
+    </node>
+
+    <node pkg="roboteq_nxtgen_controller" name="nxtgen_right_driver_node"
+          type="nxtgen_driver_node" output="screen">
+      <param name="hardware_id" value="Right RoboteQ Controller" />
+      <param name="port" value="/dev/robot/right_motor_controller" />
+      <param name="ch1_joint_name" value="right_front_wheel_joint"/>
+      <param name="ch2_joint_name" value="right_rear_wheel_joint"/>
+      <param name="use_encoders" value="true" />
+      <param name="operating_mode" value="closed-loop speed" />
+      <param name="encoder_ppr" value="420" />
+      <param name="reset_encoder_count" value="true" />
+      <param name="ch1_max_motor_rpm" value="72" />
+      <param name="ch2_max_motor_rpm" value="72" />
+      <param name="invert" value="true" />
+      <remap from="joint_states" to="right_joint_states" />
+    </node>
+ 
+    <node pkg="roboteq_nxtgen_controller" name="nxtgen_left_driver_node"
+          type="nxtgen_driver_node" output="screen">
+      <param name="hardware_id" value="Left RoboteQ Controller" />
+      <param name="port" value="/dev/robot/left_motor_controller" />
+      <param name="ch1_joint_name" value="left_front_wheel_joint"/>
+      <param name="ch2_joint_name" value="left_rear_wheel_joint"/>
+      <param name="use_encoders" value="true" />
+      <param name="operating_mode" value="closed-loop speed" />
+      <param name="encoder_ppr" value="420" />
+      <param name="reset_encoder_count" value="true" />
+      <param name="ch1_max_motor_rpm" value="72" />
+      <param name="ch2_max_motor_rpm" value="72" />
+      <param name="invert" value="false" />
+      <remap from="joint_states" to="left_joint_states" />
+    </node>
+    
+    <node pkg="skid_drive_controller" name="skid_drive_controller" type="base_controller_node" output="screen">
+      <param name="wheel_base1" value="0.5969" type="double"/>
+      <param name="wheel_radius" value="0.1016" type="double"/>
+    </node>	
+  </group>
+</launch>
+\end{lstlisting}
+
+There are a few important things to note. First, this is just a normal .xml document. Everything works just the same any any other .xml document. There's a lot in here, but it's really not that scary. Take each block one at a time and it becomes easier. There are a few things I want to highlight about this document.
+
+\subsubsection{<launch>}
+
+The launch tag is just the root of the document and is required to be present in order for the file to be parsed correctly. 
+
+\subsubsection{<group ns="\$(env ROBOT)">}
+
+This is one of the more obscure tags. What this is doing is assigning everything in the block to a certain namespace. That namespace is defined by the environment variable ROBOT. On the SMP and Mecanum robots, ROBOT is defined in the bringup service. We'll talk about that in Section \ref{sec:bringupservice}.
+
+\subsubsection{<node...>}
+
+The node tag defines that this block pertains to launching a single node. If you want to launch multiple nodes of the same type, each node needs to make a unique appearance in the launch file. They do not need to be given unique names. ROS automatically appends a large pseudo-random number to each node name to avoid name collisions. Topics, however, will collide if not named uniquely. This allows multiple nodes to speak or listen to the same topic.
+
+\subsubsection{pkg, name, type}
+
+These are named a bit non-intuitively.
+
+"name" is the name you want the node to appear with in utilities like rosnode list.
+ 
+"pkg" is the package the node is found in.
+ 
+"type" is the actual name of the node you want to launch.
+ 
+Getting type and name confused is very common. I did it all the time. In fact, I never actually knew for certain which was which until I bothered to look it up while writing this guide.
+ 
+\subsubsection{output="screen"}
+ 
+Adding this to a node causes it to pipe all output to the terminal. By default, the output is logged in ROS, but not displayed. I recommend turning this on basically always.
+ 
+\subsubsection{<param>}
+ 
+This allows you to supply arguments for the key-value parameters for a node. While the ROS community has a set of guidelines for naming parameters, and exactly what parameters should be available, the actual parameter set depends on the node.
+
+\subsubsection{<remap>}
+
+This allows you to change the name of a topic that would be subscribed to or published by the node. This is useful when you want to write a single generic piece of code for a node, but each instance of the node needs a separate channel over which to communicate.
+
+\section{Running Nodes Manually}
+
+The alternative to using launch files is to launch nodes from the command line. The general format for this is:
+
+\begin{lstlisting}[language=bash]
+  $ rosrun <package> <node>
+\end{lstlisting}
+ 
+ However, sometimes you also want to specify parameters or in some way modify the behavior of the node. All parameters can be set, using the syntax:
+ 
+ \begin{lstlisting}[language=bash]
+  $ rosrun <package> <node> <paramters>:=<value>
+\end{lstlisting}
+
+In addition to the parameters set up in the node itself, there are five special keys that are built in to ROS and don't require the parameters to be specified in the node itself. Use of these parameters is generally not encouraged outside a launch file, but they are there if you need them for testing.
+ 
+\subsubsection{\_\_name}
+
+You can override the default name for a node using the \_\_name paramter.
+
+\subsubsection{\_\_ns}
+
+You can supply a namespace using the \_\_ns parameter.
+
+\subsubsection{\_\_log}
+
+You can supply a path for the node's log file.
+
+\subsubsection{\_\_ip and \_\_hostname}
+
+You can supply ROS\_IP and ROS\_MASTER\_URI values using \_\_ip and \_\_hostname respectively.
+
+\subsubsection{\_\_master}
+
+You can supply a value for ROS\_MASTER\_URI in this way as well.
+ 
+\section{Running ROS}
+
+When running ROS, there are a few important steps you must make in \textit{each} terminal you open. Another option is to add these commands to your ~/.bashrc file so they are automatically run whenever a new terminal is opened.
+
+\subsubsection{Sourcing}
+
+When you start up a terminal, it generally doesn't know what ROS binaries are available, or where they exist. Commands like rostopic list will not be understood by the terminal if you have forgotten to source. To source your general ROS installation, use: 
+
+\begin{lstlisting}[language=bash]
+  $ source /opt/ros/<ros-version>/setup.bash
+\end{lstlisting}
+
+To use ROS binaries you compiled, you need to source the setup.bash in your workspace. The command should look something like:
+
+\begin{lstlisting}[language=bash]
+  $ source ~/my_workspace/devel/setup.bash
+\end{lstlisting}
+
+\subsubsection{Exports}
+
+There are two very important system variables that must be exported for ROS to function correctly. The ROS\_IP and ROS\_MASTER\_URI. The ROS\_IP tells the master at what IP address the nodes on the local machine can be found. The ROS\_MASTER\_URI tells the nodes on the local machine where to find the master. If you are having messages along the lines of "Failed to contact master" these are a good place to start. To set your ROS\_IP run:
+
+\begin{lstlisting}[language=bash]
+  $ ip addr
+\end{lstlisting} 
+
+Or
+
+\begin{lstlisting}[language=bash]
+  $ ifconfig
+\end{lstlisting} 
+
+To find your ip address on the network of interest. If are connected via Ethernet, there should be an "eth" interface. "lo" is loop-back, which is 127.0.0.1, and you almost never want that one unless you are only running all nodes locally. I believe this is used by default if ROS\_IP is not set. "wlp10s0" or similar are wireless networks. In all cases, you are looking for an IPv4 address.
+
+Once you find your address, set the ROS\_IP with the command:
+
+\begin{lstlisting}[language=bash]
+  $ export ROS_IP=<ip>
+\end{lstlisting} 
+
+The ROS\_MASTER\_URI is a bit trickier. First, you have to find the IP for the master node the same way you found the IP for ROS\_IP. Of course, it needs to be on the machine the master will be running on. If you're running everything locally, the IPs will be the same. However, for reasons that are probably good but unknown to me, the ROS\_MASTER\_URI is treated as a URL instead of an IP address. So the command looks like this instead:
+
+\begin{lstlisting}[language=bash]
+  $ export ROS_MASTER_URI=http://<ip>:11311
+\end{lstlisting} 
+
+11311 is the port number that the ROS master listens on for new communications. If you have a firewall active, this port must be opened correctly.
+
+\subsubsection{Firewall}
+
+ROS can be made to play nicely with firewalls, but it's generally more trouble than it is worth. If you want to talk between machines, or if you have problems communicating on a single machine, disable the firewall using this command:
+
+\begin{lstlisting}[language=bash]
+  $ sudo systemctl stop firewalld
+\end{lstlisting}
+
+This command only stops the current firewalld process. To disable firewalld from launching on boot, as well as stopping the running process, use:
+
+\begin{lstlisting}[language=bash]
+  $ sudo systemctl disable firewalld
+\end{lstlisting} 
+
+However, this does leave your machine vulnerable. If your machine is ever expected to connect to the internet again, make sure to renable and restart the firewalld process using:
+
+\begin{lstlisting}[language=bash]
+  $ sudo systemctl enable firewalld
+  $ sudo systemctl start firewalld
+\end{lstlisting} 
+
+\section{Making a ROS Robot}
+
+Now you have most of the pieces
+
+%systemd calls roslaunch /etc/systemd/system/smp_bringup.service
+
+%router to internet, port forward for ssh - port 22, network, access
+
+%--Joint state aggregator - smd-ros-devel
+%joy-to-twist - caleb - smd-ros-devel
+%--mecanum_drive - smd-ros-devel
+%roboteq_nxtgen_controller
+%skid_drive_controller
+%smp_bringup
+%--smp_description
+%--yei_tss_usb
