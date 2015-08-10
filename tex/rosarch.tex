@@ -5,7 +5,7 @@
 
 \section{What is ROS?}
 
-There are a dozen tutorials online that do a better job of giving beginner's ROS tutorials. I'm not going to try to repeat that here. However, there are some things I've learned about ROS that are worth passing on that seem to get forgotten in the tutorials.
+There are a dozen tutorials online that do a better job of giving beginner's ROS tutorials. I'm not going to try to repeat that here. However, there are some things I've learned about ROS that are worth passing on that seem to get forgotten or difficult to find in the tutorials.
 
 First, ROS isn't big, scary, or even all that complex (for the user). Fundamentally, all ROS does for you is pass messages. Just think of it as a communication system for mini-programs you write, called Nodes. The channels they communicate over are called Topics. There is a main ROS control program typically called the Master, or roscore.
 
@@ -17,9 +17,9 @@ There are a few important terms in ROS. They have very precise definitions, but 
 
 \subsubsection{Node}
 
-A ROS Node is a single computational unit. Generally, this is a single process, but you can have a single node launch multiple threads if you wish. Usually, this is some chunk of code written in Python or C++, although other languages are supported.
+A ROS Node is a single computational unit. Generally, this is a single process, but you can have a single node launch multiple threads if you wish. Usually, this is some chunk of code written in Python or C++, although other languages are supported. A good rule of thumb to follow is that each node should do only one task. Much like functions in a traditional program, nodes should be designed to be as small and modular as possible - while still maintaining some level of usefulness. Code reuse is king in ROS.
 
-You can see which nodes are currently active, and see some information about the node using:
+You can see which nodes are currently active, and see some information about the node using the commands:
 
 \begin{lstlisting}[language=bash]
   \$ rosnode list
@@ -34,7 +34,7 @@ The master is a special node, started by running the command:
   \$ roscore
 \end{lstlisting}
 
-The master is essential to running all other ROS commands. This node is responsible for setting up channels of communication between the other nodes in the system. However, it does not take an active role in that communication once it is established.
+Do note that the process that starts roscore does not end, so that terminal will be unusable as long as roscore is running. It is inadvisable to detatch the roscore process from the terminal when running manually, because you won't be able to see warnings or errors. The master is essential to running all other ROS commands. This node is responsible for setting up channels of communication between the other nodes in the system. However, it does not take an active role in that communication once it is established.
 
 \subsubsection{Publisher}
 
@@ -46,7 +46,7 @@ A subscriber is a type of node that consumes information from publishers.
 
 \subsubsection{Topic}
 
-A topic is a named communication channel. This is the mechanism by which publishers and subscribers produce or consume information. Any number of nodes can publish to a single topic, and any number can subscribe to it. These topics are almost always one-directional. If you have two nodes that talk back and forth, you should use two different topics; one for each direction of information flow.
+A topic is a named communication channel. This is the mechanism by which publishers and subscribers produce or consume information. Any number of nodes can publish to a single topic, and any number can subscribe to it, but there is no ROS-standard way to designate a particular receipient. This is by design and allows for greater flexibility and generality. These topics are almost always one-directional. If you have two nodes that talk back and forth, you should use two different topics; one for each direction of information flow.
 
 A topic is intended for long-term, continuous communication. For one-shot, or very infrequent communication, use a service.
 
@@ -59,19 +59,19 @@ You can view which topics are currently active and get information about them us
 
 \subsubsection{Workspace}
 
-A workspace is a directory structure in which you will do your work when you want to compile and run your own ROS nodes. There is an excellent tutorial about setting up your first workspace at \url{http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment}. 
+A workspace is a directory structure in which you will do your work when you want to compile and run your own ROS nodes. There is an excellent tutorial about setting up your first workspace at \url{http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment}. I recommend putting workspaces in the home directory as a general rule.
 
 \subsubsection{Service}
 
-A service is sort of like a special, one-shot communication between nodes. This is generally used for something like buttons that the robot must respond to when pressed. The robots in the lab often have a "safe-start" topic, which enables the motor controllers. Services should not be used for frequent communication.
+A service is sort of like a special, one-shot communication between nodes. This is generally used for something like buttons that the robot must respond to when pressed. The robots in the lab often have a "safe-start" service, which enables the motor controllers. Services should not be used for frequent communication.
 
 \subsubsection{Launch File}
 
-A launch file is an .xml document. It is essentially a script for starting up a master node and several other nodes. It also makes it very easy to run nodes with arguments. In short, if you end up running more than one node together, you'll want to make a launch file. Refer to Section \ref{sec:launchfiles} for an example.
+A launch file is an .xml document. It is essentially a script for starting up a master node and several other nodes. It also makes it very easy to run nodes with arguments. In short, if you end up running more than one node together, or if you have a lot of parameters, you'll want to make a launch file. Refer to Section \ref{sec:launchfiles} for an example.
 
 \subsubsection{Namespace}
 
-A namespace is a way to group related nodes and topics. Generally, we create a namespace for each robot. That way, if multiple robots were running on the same network, we avoid naming collisions with the nodes and topics. For example, every node and topic created in the Mecanum launch file will show up as /mecanum/<node>. Namespaces can be nested.
+A namespace is a way to group related nodes and topics. Generally, we create a namespace for each robot. That way, if multiple robots were running on the same network, we avoid naming collisions with the nodes and topics. For example, every node and topic created in the Mecanum launch file will show up as /mecanum/<node>. Namespaces can be nested, but we haven't needed to do that.
 
 \subsubsection{Parameters}
 
@@ -181,10 +181,10 @@ The alternative to using launch files is to launch nodes from the command line. 
   $ rosrun <package> <node>
 \end{lstlisting}
  
- However, sometimes you also want to specify parameters or in some way modify the behavior of the node. All parameters can be set, using the syntax:
+However, sometimes you also want to specify parameters or in some way modify the behavior of the node. All parameters can be set, using the syntax:
  
  \begin{lstlisting}[language=bash]
-  $ rosrun <package> <node> <paramters>:=<value>
+  $ rosrun <package> <node> <paramter>:=<value> <parameter>:=value ...
 \end{lstlisting}
 
 In addition to the parameters set up in the node itself, there are five special keys that are built in to ROS and don't require the parameters to be specified in the node itself. Use of these parameters is generally not encouraged outside a launch file, but they are there if you need them for testing.
@@ -229,7 +229,7 @@ To use ROS binaries you compiled, you need to source the setup.bash in your work
 
 \subsubsection{Exports}
 
-There are two very important system variables that must be exported for ROS to function correctly. The ROS\_IP and ROS\_MASTER\_URI. The ROS\_IP tells the master at what IP address the nodes on the local machine can be found. The ROS\_MASTER\_URI tells the nodes on the local machine where to find the master. If you are having messages along the lines of "Failed to contact master" these are a good place to start. To set your ROS\_IP run:
+There are two very important system variables that must be exported for ROS to function correctly. The ROS\_IP and ROS\_MASTER\_URI. The ROS\_IP tells the master at what IP address the nodes launched on the local machine can be found. The ROS\_MASTER\_URI tells the nodes on the local machine where to find the master. If you are having messages along the lines of "Failed to contact master" these are a good place to start. To set your ROS\_IP run:
 
 \begin{lstlisting}[language=bash]
   $ ip addr
@@ -280,7 +280,7 @@ However, this does leave your machine vulnerable. If your machine is ever expect
 
 \section{Making a ROS Robot}
 
-Now you have most of the pieces
+Now you have enough knowledge to get by with. The next step is actually starting to put something together. This section assumes you already have Linux and ROS installed on whatever computer you intend to use as the brain of the robot.
 
 %systemd calls roslaunch /etc/systemd/system/smp_bringup.service
 
