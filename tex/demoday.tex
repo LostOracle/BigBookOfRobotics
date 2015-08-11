@@ -1,0 +1,42 @@
+% !TEX root = HowToRobot.tex
+
+\chapter{Demo Day}
+\label{chap:demoday}
+
+So, you've got five minutes. Here comes Dr. Riley with a tour group and you weren't ready. Never fear! These instructions will have you up and running with an RC robot in half that time.
+
+You'll need the following:
+
+\begin{itemize}
+\item{USB-to-Serial adapter (optional)}
+\item{USB-USBmini cable}
+\item{PS3 Controller}
+\item{Computer with Wifi running Fedora 21 with ROS and joy installed}
+\end{itemize}
+
+Start the timer. If you set up a static ip address for the odroid as shown in Chapter \ref{chap:odroidsetup}, skip step 2.
+\begin{enumerate}
+\item{Power on robot}
+\item{Plug the PS3 controller in to the computer}
+\item{Plug/Unplug the PS3 controller and push the button until the player 1 light stays on}
+\item{Connect wirelessly to the robot}
+\item{Serial in to the Odroid to find the ip address - optional}
+\item{Source your ROS install}
+\begin{lstlisting}[language=bash]
+  $ source /opt/ros/indigo/setup.bash
+\end{lstlisting}
+\item{Find your own ip address - it'll be a 192.168 address}
+\item{Export IPs}
+\begin{lstlisting}[language=bash]
+  $ export ROS_IP=<your ip>
+  $ export ROS_MASTER_URI=http://<robot ip>:11311
+\end{lstlisting}
+\item{Run the joy node locally}
+\begin{lstlisting}[language=bash]
+  $ rosrun joy joy_node joy:=/<robot>/joy
+\end{lstlisting}
+\end{enumerate}
+
+In the last step <robot> is the name of the robot used in the the launchfile as a namespace. See Chapter \ref{chap:rosarchitecture} for details.
+
+Done. Probably. You should be able to move the joysticks on the PS3 controller and get the robot to move at this point. If that doesn't work, you probably missed a step during setup. Or I missed a step with this guide. If that's the case, let me know so I can update it.

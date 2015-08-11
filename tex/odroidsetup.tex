@@ -149,6 +149,24 @@ This is a fairly basic install, so there may be some unresolved dependencies. If
   $ rosdep install --from-path <src> --ignore-src	
 \end{lstlisting}
 
+\section{Setting up a static IP}
+
+One thing you will probably want to do at some point is to give the Odroid a static ethernet IP address. This saves you from needing to hunt down a serial cable to get in and run ip addr every time you connect it to a new network. This is, thankfully, very easy. Just find the /etc/network/interfaces file. It should look something like:
+\begin{lstlisting}[language=bash]
+# The loopback network interface
+auto lo
+iface lo inet loopback
+\begin{lstlisting}[language=bash]
+# The primary network interface
+auto eth0
+iface eth0 inet static
+ address 192.168.0.1
+ netmask 255.255.255.0
+\end{lstlisting}
+
+Yours probably doesn't have an iface eth0 entry yet. Add one, and replace the address with whatever address you want the odroid to have.
+
+
 \section{Common Errors}
 
 There are a handful of pretty common errors that I found solutions for:

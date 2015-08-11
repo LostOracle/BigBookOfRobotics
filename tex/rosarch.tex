@@ -77,6 +77,38 @@ A namespace is a way to group related nodes and topics. Generally, we create a n
 
 Most nodes have parameters, much like command line arguments in C/C++. In ROS, these parameters are handled as key-value pairs. Each parameter has a name and a value. One example is the joy topic name, addressed in Section \ref{sec:makeitgo}.
 
+\subsubsection{Driver}
+
+A driver is a very special node. Drivers are the only nodes in ROS that are not supposed to be platform independent. That's because they're the only nodes that get to talk to hardware. A prime example of a driver is joy\_node from the package joy that reads input from a PlayStation 3 controller. There are also several drivers we wrote in house including the roboteq\_nxtgen\_controller, roboclaw\_driver, and yei\_tss\_usb. These nodes have exactly one responsibility: communicating with their piece of hardware. 
+
+\subsubsection{Message}
+
+A message is a single packaged unit of information to be sent over a topic. ROS has a large set of message types built in to the core system. In general, you won't want to define your own messages. Not only is it somewhat difficult to do, your code won't work with nodes written by other people. In ROS, code re-usability and modularity is king. Again, try to avoid creating your own message types.
+
+Common message types include: joy, Point3D, twist, quaternion, and many others
+
+The standard types like int, bool, string, and arrays are also supported, but you end up using those rarely in robotics.
+
+\subsubsection{Distribution}
+
+There are several versions of ROS. Most of my work was done in ROS Indigo. As of early August 2015, the wiki still said ROS Jade was on track to be released in May of 2015, so we can probably expect to see that soon, but not yet.
+
+As a side note, the ROS mascot is a turtle, and the distributions are following alphabetical progression. The versions thus far have been:
+
+\begin{enumerate}
+\item{ROS Box Turtle - March 2, 2010}
+\item{ROS C Turtle - August 2, 2010}
+\item{ROS Diamondback - March2, 2011}
+\item{ROS Electric Emys (usually just called Electric) - August 30, 2011}
+\item{ROS Fuerte Turtle - April 23, 1012}
+\item{ROS Groovy Galapagos "Groovy" - December 31, 2012}
+\item{ROS Hydro Medusa "Hydro" - September 4, 2013}
+\item{ROS Indigo Igloo (Stable) - July 22, 2014}
+\item{ROS Jade Turtle (Unstable) - May 23, 2015?}
+\end{enumerate}
+
+Also, if you think ROS is complicated and hard to use now, take Fuerte or Electric for a spin.
+
 \section{Launch Files}
 \label{sec:launchfiles}
 

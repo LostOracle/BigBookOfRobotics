@@ -1,0 +1,145 @@
+% !TEX root = HowToRobot.tex
+
+\chapter{Robot ROS Setup}
+\label{chap:rossetup}
+
+So you have a robot with all the parts in, Linux booting, and ROS installed. What next? The Section will give you a guide to getting your robot under remote control over a network using a PS3 controller, which is our standard procedure for demos. If you already have a robot set up and just want to drive it around, skip to Chapter \ref{Chap:demoday}.
+
+\section{Packages}
+
+The first step is making sure you have all the right packages installed in a place that ROS can find them. There's a lot to do right away, but don't worry, you'll get the hang of it. First, I'll go through a step-by-step guide and explain each step. At the end of the section, I'll reiterate with just a list of commands to get from 0 to RC in... well, probably not 3 seconds, but you get the idea.
+
+\subsubsection{Creating the Workspace}
+
+First, we need a workspace to put everything in. I'm going to assume you're making a workspace called demo\_ws and putting it in the home directory for the odroid user. The following commands will create the workspace. (This is copied directly from the online tutorial)
+
+\begin{lstlisting}[language=bash]
+  $ mkdir -p ~/demo\_ws/src
+  $ cd ~/demo_ws/src
+  $ catkin_init_workspace
+  # cd ~/demo_ws
+  $ catkin_make
+\end{lstlisting}
+
+ROS needs to do some setup in the directories before you can really use them. This includes creating a few directories and creating a CMakeList file. Don't touch the CMakeList file. It's just a symlink to the CMakeList in /opt/ros/<distro>, which you really don't want to break. Each package will have its own CMakeList that you need to modify, but we'll get to that later.
+
+\subsubsection{Getting Packages}
+
+ For this guide, I'll be using the SMP robot as an example. To get the demo-bot up and running, you'll need the following packages.
+
+\begin{itemize}
+\item{joy}
+\item{joy\_to\_twist}
+\item{roboteq\_nxtgen\_controller}
+\item{skid\_drive\_controller}
+\item{smp\_bringup}
+\end{itemize}
+
+What do all of these packages do? Excellent question.
+
+The joy\_node in the joy package is a driver that communicates with a PlayStation 3 controller. At the time of writing, there was a slight issue with the joy\_node. On Fedora 22, they have moved away from the js system for joystick inputs and instead moved to the event system. I believe an update to the joy\_node was in development, but I never got a chance to use it. For now, it may be best to just use a machine running Fedora 21 to take commands from the PS3 controller, because the joy\_node works very easily that way. In any case, the joy\_node talks to a PS3 controller and publishes a joy message, which is just a bunch of floats in the range -1 to 1 to indicate the state of each button and joystick axis.
+
+The joy\_to\_twist isn't in our GitHub repositories like the rest of the packages to follow. It currently exists in two places on GitHub: \url{https://github.com/cottsay/joy_to_twist} and \url{https://github.com/CBJamo/joy_to_twist}. CBJamo's version is (currently) a branch from cottsay's version and more recent. Eventually, the pull request by CBJamo will likely be folded into the master branch in cottsay's repo at which point the CBJamo repo will likely cease to exist. Basically, look at both and pick the one that has the most recent commits.
+
+Anyway, the joy\_to\_twist node subscribes to the /joy topic, and spits out what we call a twist message on the /cmd\_vel topic. cmd\_vel stands for command velocity, and is the desired speed of the robot given the controller input. This includes both translation and rotation. The twist contains a whole bunch of position, velocity, and acceleration data, but the joy\_to\_twist node only populates the velocity data.
+
+The purpose of the skid\_drive\_controller is to take a commanded velocity from /cmd\_vel and produce a set of motor commands. The skid\_drive\_controller is our first node that isn't entirely system agnostic. Ideally, the only system dependent nodes should be drivers, but in practice this is rarely feasible. In this case, the Mecanum robot and the SMP robots have different kinematic models, so they must deal with velocity commands differently. The skid\_drive\_controller node is aware of the fact that the robot cannot translate freely, and produces motor command accordingly. The skid\_drive\_controller also uses multiple topics to output commands, and those topics are expected to be remapped. This is because the skid\_drive\_controller node doesn't know ahead of time how many motors there will be, what motor controller will be in use, or what topics it needs to publish to. See the launch file in smp\_bringup for details.
+
+The roboteq\_nxtgen\_controller subscribes to one topic for each motor being controlled. For the SMP, two instances of this node will be launched by smp\_bringup, each subscribing to two topics. The roboteq\_nxtgen\_controller also publishes a bunch of really useful diagnostic info and allows the transmission of commands to the motor controllers. For this guide, we're going to ignore all of that. The roboteq\_nxtgen\_controller is a driver node, which means that its job is strictly to be the interface between the rest of the ROS system and the hardware.
+
+The smp\_bringup package doesn't actually contain any nodes, but it does contain the launch file for starting up all of the nodes mentioned thus far with the proper parameters, namespaces, and topic names.
+
+So, how do you get the packages? There are actually two ways. For packages that are in the main ROS repositories, you can use the package manager yum. For instance, to install the joy package in ROS Indigo:
+
+\begin{lstlisting}[language=bash]
+  $ sudo yum install ros-indigo-joy
+\end{lstlisting}
+
+For the packages which are not part of the core ROS repositories, you'll have to download the repositories from git-hub and compile them. Fortunately, we were really nice when we made the repositories and it's real easy to do.
+
+\begin{lstlisting}[language=bash]
+  $ cd ~/demo_ws/src
+  $ git clone <package-repo>.git
+\end{lstlisting}
+
+There, that wasn't so bad. We put each package in its own repository so they could be selected individually for inclusion on specific robots.
+
+To compile everything just run the following commands:
+
+\begin{lstlisting}[language=bash]
+  $ cd ~/demo_ws
+  $ catkin_make
+\end{lstlisting}
+
+If all goes well, you won't have any compiler errors... but... well, you know how that goes. Things in ROS are changing all the time, and sometimes we break the repositories. Sometimes you'll get this far before you find out your ROS install is broken. Fortunately, there are some pretty smart people at SDSMT who can help you out. You can also send me (the author) an email and I can try to help you out. My contact info should be somewhere near the beginning of the document.
+
+\subsubsection{Udev Rules}
+
+Hardware always throws a wrench in things. Say you've got two motor controllers plugged in via serial or USB (serial is better, btw). How do you know which device is which at boot? The answer? You don't. They'll mount in whatever order they want. Fortunately, there is a simple solution. Refer to listing \ref{lst:udevrules}.
+
+\begin{lstlisting}[language=bash]
+  \label{lst:udevrules}
+  \caption{99-smp2.rules}
+  ACTION=="add",SUBSYSTEMS=="usb",ATTRS{idVendor}=="20d2",ATTRS{idProduct}=="5740",ATTRS{serial}=="498326853235",SYMLINK+="robot/left_motor_controller",MODE="0666"
+ACTION=="add",SUBSYSTEMS=="usb",ATTRS{idVendor}=="20d2",ATTRS{idProduct}=="5740",ATTRS{serial}=="498626953235",SYMLINK+="robot/right_motor_controller",MODE="0666"
+ACTION=="add",SUBSYSTEMS=="usb",ATTRS{idVendor}=="15d1",ATTRS{idProduct}=="0000",SYMLINK+="robot/lidar",MODE="0666"
+ACTION=="add",SUBSYSTEMS=="usb",SUBSYSTEM=="tty",ATTRS{idVendor}=="2476",ATTRS{idProduct}=="1010",SYMLINK="robot/imu",MODE="0666"
+\end{lstlisting}
+
+This looks a little confusing at first, partially because of word wrap. Do note that each ACTION should get its own line. Line breaks are significant here, so don't put any extra in. Basically, each line sets up a filter. Whenever the system detects that a device has been plugged in, it will check the device against each filter in the udev rule files. (There can be several udev rule files, but they must all begin with a two digit number and be placed in the /usr/lib/udev/rules.d folder or they will be ignored. The number is the priority, with 1 being the lowest and 99 being the highest. It is generally recommended to use very high numbers, because using a very low number can actually interfere with some of the things the OS wants to do. In practice you only generally have one udev rule file and you call it 99-<whatever-you-want>.rules.
+
+If you want to create a new udev rule, the process generally follows the following steps:
+
+\begin{itemize}
+\item{Unplug the device}
+\item{Run the \lstinline{ls /dev}lstinline{} command}
+\item{Plug the device back in}
+\item{Run the \lstinline{ls /dev}lstinline{} command}
+\item{Find the new device}
+\item{Run the \lstinline{udevadm info -a -p $(udevadm info -q path -n /dev/video2)}lstinline{} command}
+\item{Find the idVendor and idProduct for the device}
+\item{Copy an old udev rule and replace the idVendor and idProduct}
+\item{Change the SYMLINK field to whatever you want it to show up as}
+\item{Google udev rules because it didn't quite work}
+\end{itemize}
+
+That last step is optional. Also, not all fields are required. If you want any, for instance, roboteq motor controller, to mount to the robot/left\_motor\_controller mount point, you can leave off the ATTRS{serial} field. The serial number is unique to each device. The product id is unique to a specific part number - vendors are real good about playing nice with Linux this way. The vendor id is unique to each manufacturer, but generally you want to use both vendor and product ids. There's nothing stopping two manufacturers from using the same in-house part number after all.
+
+\subsubsection{Autorun at Boot}
+
+Usually, with robots, you don't want to ssh in to the robot and run the launch commands every time you want to do something with the robot. What you really want is for the robot to just start up whenever it receives power and await commands. Fedora 21 makes this pretty easy with the systemd boot services. Here's the file you'll need, I'll talk about it here in a second.
+
+\begin{lstlisting}[language=bash]
+\label{lst:smpbringup.service}
+\caption{SMP Bringup Service}
+[Unit]
+Description=ROS Launch for smp
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=odroid
+Environment=ROS_MASTER_URI=http://192.168.0.2:11311
+Environment=ROS_IP=192.168.0.2
+Environment=ROBOT=smp2
+ExecStart=/opt/ros/indigo/env.sh /home/odroid/demo_ws/install_isolated/env.sh roslaunch smp_bringup smp.launch --wait
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+\end{lstlisting}
+
+So this is actually pretty tricky. We had to experiment to get this service to start up right. There are still a few wacky things in ROS that they're trying to iron out in Jade and future releases. One such issues is ROS's tendancy to freak the **** out if it tries to start up before the networking drivers are loaded. That's why the After= and Wants= targets have to be in there. That basically forces this service to wait until those two things are ready before running. You'll notice the Environment= values are just the environment variables talked about in Section \ref{chap:rosarchitecture}. The ExecStart= command just tells it to go find and run the launchfile as a bash script.
+
+You'll notice that we have the insatll\_isolated directory in our workspace instead of just the install directory. Don't worry about it too much. Once you have a working robot, you can compile an "isolated" version of your packages. This strips out all the build files and makes everything a bit smaller and faster. This can be important on mobile robots with limited space and power, but don't worry about it until you're finished developing.
+
+The rest is basically boiler plate - meaning I don't actually remember what it does, but everything breaks if it's not there.
+
+This file, which we called smp\_bringup.service, belongs in the /etc/systemd/system/ directory. The only special naming convention there is that each file must end with ".service".
+
+One big plus of doing it this way, is you can startup, shutdown, or restart your ROS programs using systemctl.
+
+\begin{lstlisting}[language=bash]
+  $ sudo systemctl start|stop|restart smp_bringup
+\end{lstlisting}

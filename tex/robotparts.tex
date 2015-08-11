@@ -125,6 +125,9 @@ To reiterate, here is a basic outline of the parts you want on your typical mobi
   \item{Brain (The Odroid XU3 in this guide)}
   \item{Encoders}
   \item{Power Switch}
+  \item{Wireless Router}
 \end{itemize}
 
-That's really all you need for a very basic robot. It'll be a glorified and very complicated RC car, but it will drive. The cool stuff starts happening when you add sensors. Many sensors can be just plugged in via USB, but some required power lines as well. This is where additional DC DC converters and regulators come in.
+The wireless router isn't really necessary for the robot, but it's my recommended way to communicate with robots. Set up an onboard router and put the odroid at a static ip address - addressed in Chapter \ref{chap:odroidsetup}. That way all you have to do is connect to the network and ssh to a known ip address to get access to the robot. No more cable hunting and no need to pull the odroid off the robot. 
+
+Otherwise, that's really all you need for a very basic robot. It'll be a glorified, expensive, and very complicated RC car, but it will drive. The cool stuff starts happening when you add sensors or autonomy. Many sensors can be just plugged in via USB, but some require power lines as well. This is where additional DC DC converters and regulators come in.
