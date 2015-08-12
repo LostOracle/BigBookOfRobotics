@@ -1,0 +1,198 @@
+
+\usepackage[width=6.5in, height=9.0in, top=1.0in, papersize={8.5in,11in}]{geometry}
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+%\usepackage{draftwatermark}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+%\usepackage{txfonts}
+\usepackage{textcomp}
+%\usepackage{amsthm}
+%\usepackage{array}
+%\usepackage{datetime}
+%\usepackage{anyfontsize}
+\usepackage{cite}
+\usepackage{enumitem}
+\usepackage{t1enc}
+\usepackage[section,subsection]{extraplaceins}   %%%  \FloatBarrier
+\usepackage[all]{xy}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{makeidx}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{rotating}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+%\usepackage{tabularx}
+\usepackage{xcolor}
+%\usepackage{framed}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage{gensymb}
+\lstset{language=python,frame=ltrb,framesep=5pt,basicstyle=\normalsize,
+ keywordstyle=\ttfamily\color{DarkRed},
+%morecomment=[n][\textbf]{In\ [}{]\:},
+%morecomment=[n][\textbf]{Out\ [}{]\:},
+morecomment=[s][\color{blue}]{In\ [}{]\:},
+morecomment=[s][\color{red}]{Out[}{]\:},
+identifierstyle=\ttfamily\color{DarkBlue}\bfseries,
+commentstyle=\color{OliveGreen},
+stringstyle=\ttfamily,
+showstringspaces=false,tabsize = 3}
+
+\lstdefinelanguage{shell} {
+commentstyle = \color{black},
+keywordstyle = \color{black},
+stringstyle = \color{black},
+identifierstyle = \color{black},
+morecomment=[s][\color{blue}]{In\ [}{]\:},
+morecomment=[s][\color{red}]{Out[}{]\:},
+ }
+
+\newtheorem{thrm}{Theorem}
+\newtheorem{lem}[thrm]{Lemma}
+\newtheorem{cor}[thrm]{Corollary}
+\newtheorem{rem}[thrm]{Remark}
+\newtheorem{defn}[thrm]{Definition}
+\newtheorem{exmpl}[thrm]{Example}
+
+% this gives a little box for the end of a proof:
+%
+\def\endthrmbox{$\sqsubset \!\!\!\! \sqsupset$}
+
+\newcommand{\dis}{\displaystyle}
+ \def      \RR             {{\mathbb R}} 
+        \def      \NN             {{\Bbb N}} 
+        \def      \QQ             {{\Bbb Q}} 
+        \def      \CC             {{\Bbb C}} 
+        \def      \ZZ             {{\Bbb Z}} 
+ 
+ 
+        \def       \a              {{\alpha}} 
+        \def       \b              {{\beta}} 
+        \def       \d              {{\delta}} 
+        \def       \D              {{\Delta}} 
+        \def         \e              {{\varepsilon}} 
+        \def         \g              {{\gamma}} 
+        \def         \G              {{\Gamma}} 
+        \def       \l              {{\lambda}} 
+        \def       \L              {{\Lambda}} 
+        \def        \m               {{\mu}} 
+        \def         \n              {{\nabla}} 
+        \def       \var          {{\varphi}} 
+        \def         \s              {{\sigma}} 
+        \def       \Sig          {{\Sigma}} 
+        \def       \Om          {{\Omega}} 
+ 
+        \def       \t              {{\tau}} 
+        \def         \th             {{\theta}} 
+        \def       \O              {{\Omega}} 
+        \def       \o              {{\omega}} 
+        \def         \z              {{\zeta}} 
+       \def        \P             {{\Phi}} 
+       \def        \p             {{\phi}} 
+        %Other macros 
+ 
+        \def       \iy              {{\infty}} 
+        \def         \pa             {{\partial}} 
+        \def         \div           {{\rm div}} 
+         \def       \na            {{\nabla}} 
+ 
+
+
+
+\newcommand{\pythonlogo}{
+\\[-2mm] \begin{picture}(0,0)
+\put(-40,-40){\includegraphics[scale=0.25]{./Figures/pythonlogo.png}}
+\end{picture}
+}
+
+\newcommand{\clogo}{
+\\[-2mm] \begin{picture}(0,0)
+\put(-30,-30){\includegraphics[scale=0.2]{./Figures/clogo.png}}
+\end{picture}
+}
+
+\newcommand{\roslogo}{
+\\[-2mm] 
+\begin{picture}(0,0)
+\put(-30,-30){\includegraphics[scale=0.2]{./Figures/roslogo.png}}
+\end{picture}
+}
+
+
+\tikzstyle{master} = [rectangle, draw, text width=6em, text centered, minimum
+height=3em]
+\tikzstyle{node} = [rectangle, draw, text width=6em, text centered, rounded
+corners, minimum height=3em]
+
+\newtheorem{summary}{Summary:}
+\newtheorem{example}{Example:}[section]
+
+\definecolor{OliveGreen}{cmyk}{0.64,0,0.95,0.40}
+\definecolor{DarkBlue}{cmyk}{0.76,0.76,0,0.20}
+\definecolor{DarkRed}{cmyk}{0,1,1,0.45}
+
+
+\def      \RR             {{\mathbb R}} 
+\def      \DS            {\displaystyle} 
+
+\setlength{\oddsidemargin}{0mm} 
+\setlength{\evensidemargin}{0mm} 
+
+%\SetWatermarkLightness{0.975}
+%\SetWatermarkScale{6}
+%\SetWatermarkText{\includegraphics{test.png}}
+
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+\fancyhf{}
+\fancyhead[LE,RO]{\bfseries\thepage}
+\fancyhead[LO]{\bfseries\rightmark}
+\fancyhead[RE]{\bfseries\leftmark}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\addtolength{\headheight}{0.5pt}
+\setlength{\footskip}{0in}
+\renewcommand{\footruleskip}{0pt}
+\fancypagestyle{plain}{%
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+}
+
+
+\definecolor{color02}{rgb}{0.18,0.35,0.59}
+\definecolor{color03}{rgb}{0.44,0.59,0.82}
+\definecolor{color06}{rgb}{0.35,0.35,0.35}
+
+
+\definecolor{MSBlue}{rgb}{.204,.353,.541}
+\definecolor{MSLightBlue}{rgb}{.31,.506,.741}
+\definecolor{MSBlue1}{rgb}{0.18,0.35,0.59}
+\definecolor{MSBlue2}{rgb}{0.44,0.59,0.82}
+\definecolor{MSBlue3}{rgb}{0.35,0.35,0.35}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+%{\normalfont\bfseries\color{MSBlue1}}    %\normalfont\bfseries\filcenter}
+{\normalfont\bfseries}    %\normalfont\bfseries\filcenter}
+{\LARGE\thechapter}
+{1ex}
+{\titlerule[2pt]
+\vspace{2ex}%
+\LARGE}
+[\vspace{1ex}%
+{\titlerule[2pt]}]
+
+
+
+\date{\today}
+

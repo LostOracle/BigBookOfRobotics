@@ -1,0 +1,63 @@
+% !TEX encoding = UTF-8 Unicode
+% !TEX root = DesignDoc.tex
+
+%%%  This is the main driver file.   It is mostly a list of file includes.   Read through and edit as needed.
+
+\documentclass[table]{book}
+
+\input{paperstyle.tex} % This sets the format.
+
+% Add your title page contents here 
+\title{{ \rule{\linewidth}{0.5mm}}\\[2mm] {\huge \bfseries  Mecnaum/SMP Design Document }\\[-1mm] {\rule{\linewidth}{0.5mm}} \\  \vfill
+{\LARGE \bfseries  SDSMT Robotics Team }\vfill}
+\author{Ian Carlson }
+\date{\today}
+
+
+
+\begin{document}
+
+\maketitle
+
+\frontmatter
+
+\addcontentsline{toc}{chapter}{Title}
+\maketitle
+\tableofcontents
+\addcontentsline{toc}{chapter}{Contents}
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+%\listoftables
+%\addcontentsline{toc}{chapter}{List of Tables}
+%\listofalgorithms
+%\addcontentsline{toc}{chapter}{List of Algorithms}
+ 
+ 
+\mainmatter
+\input{Purpose}
+\input{Requirements}
+%\input{Mechanical Design}
+%\input{Electrical Design}
+%\input{ROS Architecture and Packages}
+%\input{Current Robot State}
+%\input{Setup Guide}
+%\input{Future Work}
+
+%%%  Done with chapters
+% Bib stuff
+
+%\bibliographystyle{IEEEtran}
+%\bibliography{refs.bib}
+%\input{refs.bib}
+%\addcontentsline{toc}{chapter}{Bibliography}
+
+
+\appendix
+
+%Images and source locations
+%Differential Drive, Ackerman Drive, Skid Steer - http://www.robotplatform.com/knowledge/Classification_of_Robots/wheel_control_theory.html
+%Mecanum Drive - 
+% Voltage Divider Image - http://learning.codasign.com/index.php?title=File:Voltage_divider_schematic.png
+% Other circuits: Wikipedia
+
+\end{document}
