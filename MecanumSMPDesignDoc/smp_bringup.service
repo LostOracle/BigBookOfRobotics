@@ -1,0 +1,16 @@
+[Unit]
+Description=ROS Launch for smp
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=odroid
+Environment=ROS_MASTER_URI=http://192.168.0.2:11311
+Environment=ROS_IP=192.168.0.2
+Environment=ROBOT=smp2
+ExecStart=/opt/ros/indigo/env.sh /home/odroid/smp_ws/install_isolated/env.sh roslaunch smp_bringup smp.launch --wait
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

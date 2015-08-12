@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<launch>
+  <group ns="$(env ROBOT)">
+    <node pkg="nodelet" name="nodelet_manager" type="nodelet"
+          args="manager" output="screen" />
+
+    <node name="joy_to_twist" pkg="joy_to_twist" type="joy_to_twist_node"
+          output="screen">
+    </node>
+
+    <node pkg="roboteq_nxtgen_controller" name="nxtgen_right_driver_node"
+          type="nxtgen_driver_node" output="screen">
+      <param name="hardware_id" value="Right RoboteQ Controller" />
+      <param name="port" value="/dev/robot/right_motor_controller" />
+      <param name="ch1_joint_name" value="right_front_wheel_joint"/>
+      <param name="ch2_joint_name" value="right_rear_wheel_joint"/>
+      <param name="use_encoders" value="true" />
+      <param name="operating_mode" value="closed-loop speed" />
+      <param name="encoder_ppr" value="420" />
+      <param name="reset_encoder_count" value="true" />
+      <param name="ch1_max_motor_rpm" value="72" />
+      <param name="ch2_max_motor_rpm" value="72" />
+      <param name="invert" value="true" />
+      <remap from="joint_states" to="right_joint_states" />
+    </node>
+ 
+    <node pkg="roboteq_nxtgen_controller" name="nxtgen_left_driver_node"
+          type="nxtgen_driver_node" output="screen">
+      <param name="hardware_id" value="Left RoboteQ Controller" />
+      <param name="port" value="/dev/robot/left_motor_controller" />
+      <param name="ch1_joint_name" value="left_front_wheel_joint"/>
+      <param name="ch2_joint_name" value="left_rear_wheel_joint"/>
+      <param name="use_encoders" value="true" />
+      <param name="operating_mode" value="closed-loop speed" />
+      <param name="encoder_ppr" value="420" />
+      <param name="reset_encoder_count" value="true" />
+      <param name="ch1_max_motor_rpm" value="72" />
+      <param name="ch2_max_motor_rpm" value="72" />
+      <param name="invert" value="false" />
+      <remap from="joint_states" to="left_joint_states" />
+    </node>
+    
+    <node pkg="skid_drive_controller" name="skid_drive_controller" type="base_controller_node" output="screen">
+      <param name="wheel_base1" value="0.5969" type="double"/>
+      <param name="wheel_radius" value="0.1016" type="double"/>
+    </node>
+	
+  </group>
+</launch>

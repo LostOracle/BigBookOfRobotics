@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.7.19)  11 AUG 2015 21:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.7.19)  12 AUG 2015 01:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1089,13 +1089,13 @@ Package gensymb Info: Using \textmu for \micro on input line 18.
 
  [1
 
-] [2
-
-] (./DesignDoc.lof)
+] [2] (./DesignDoc.lof)
 \tf@lof=\write7
 \openout7 = `DesignDoc.lof'.
 
- [3] [4
+ [3
+
+] [4
 
 ] (./Purpose.tex
 Chapter 1.
@@ -1132,7 +1132,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--7
 
  []
 
-<SMP1.png, id=145, 3276.24pt x 1842.885pt>
+<SMP1.png, id=250, 3276.24pt x 1842.885pt>
 File: SMP1.png Graphic file (type png)
  <use SMP1.png>
 Package pdftex.def Info: SMP1.png used on input line 16.
@@ -1145,7 +1145,7 @@ has been already used, duplicate ignored
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.22 
-      <./SMP1.png>] <SMP2.png, id=151, 3276.24pt x 1842.885pt>
+      <./SMP1.png>] <SMP2.png, id=255, 3276.24pt x 1842.885pt>
 File: SMP2.png Graphic file (type png)
  <use SMP2.png>
 Package pdftex.def Info: SMP2.png used on input line 25.
@@ -1157,48 +1157,86 @@ Package pdftex.def Info: SMP2.png used on input line 25.
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
 l.41 
-      <./SMP2.png>] <mecanumrobot.png, id=156, 1626.075pt x 1104.125pt>
+      <./SMP2.png>] <mecanumrobot.png, id=260, 1626.075pt x 1104.125pt>
 File: mecanumrobot.png Graphic file (type png)
 
 <use mecanumrobot.png>
 Package pdftex.def Info: mecanumrobot.png used on input line 48.
 (pdftex.def)             Requested size: 469.75499pt x 318.95818pt.
-) [7pdfTeX warning (ext4): destination with the same identifier (name{figure.3.
-3}) has been already used, duplicate ignored
+) (./ElectricalDesign.tex [7pdfTeX warning (ext4): destination with the same id
+entifier (name{figure.3.3}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.63 \end{document}
-                    <./mecanumrobot.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 63.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 63.
+l.3 \chapter
+            {Electrical Design} <./mecanumrobot.png>] [8
+
+]
+Chapter 4.
+[9] [10] <PowerDiagram.png, id=290, 826.08624pt x 732.7375pt>
+File: PowerDiagram.png Graphic file (type png)
+
+<use PowerDiagram.png>
+Package pdftex.def Info: PowerDiagram.png used on input line 89.
+(pdftex.def)             Requested size: 469.75499pt x 416.68082pt.
+ <LogicDiagram.png, id=292, 525.965pt x 554.07pt>
+File: LogicDiagram.png Graphic file (type png)
+
+<use LogicDiagram.png>
+Package pdftex.def Info: LogicDiagram.png used on input line 98.
+(pdftex.def)             Requested size: 352.31624pt x 371.15733pt.
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) (./ROSDesign.tex [11pdfTeX warning (ext4): destination with the same identifi
+er (name{figure.4.1}) has been already used, duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.3 \chapter
+            {ROS Architecture} <./PowerDiagram.png>] [12pdfTeX warning (ext4): 
+destination with the same identifier (name{figure.4.2}) has been already used, 
+duplicate ignored
+
+\AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
+                                                  \fi \fi 
+l.3 \chapter
+            {ROS Architecture} <./LogicDiagram.png>]
+Chapter 5.
+) [13
+
+]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 60.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 60.
  (./DesignDoc.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 63.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 63.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 60.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 60.
 Package rerunfilecheck Info: File `DesignDoc.out' has not changed.
-(rerunfilecheck)             Checksum: 55F4A4ADE4C19BB66352B6A3F5CB0B5E;1031.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 63.
+(rerunfilecheck)             Checksum: ED37339B279F677E17B60A70BB634499;2261.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 60.
  ) 
 Here is how much of TeX's memory you used:
- 23121 strings out of 493093
- 403787 string characters out of 6140786
- 547940 words of memory out of 5000000
- 26088 multiletter control sequences out of 15000+600000
- 21087 words of font info for 65 fonts, out of 8000000 for 9000
+ 23202 strings out of 493093
+ 405013 string characters out of 6140786
+ 549939 words of memory out of 5000000
+ 26132 multiletter control sequences out of 15000+600000
+ 21863 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  64i,11n,56p,3290b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
 {g:/TexLive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{g:/TexLive/t
 exmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<g:/TexLive/texmf-dist/font
 s/type1/public/cm-super/sfbx1000.pfb><g:/TexLive/texmf-dist/fonts/type1/public/
-cm-super/sfbx1440.pfb><g:/TexLive/texmf-dist/fonts/type1/public/cm-super/sfbx17
-28.pfb><g:/TexLive/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><g:/TexL
-ive/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><g:/TexLive/texmf-dist/
-fonts/type1/public/cm-super/sfrm1200.pfb><g:/TexLive/texmf-dist/fonts/type1/pub
-lic/cm-super/sfti1000.pfb>
-Output written on DesignDoc.pdf (13 pages, 18269177 bytes).
+cm-super/sfbx1200.pfb><g:/TexLive/texmf-dist/fonts/type1/public/cm-super/sfbx14
+40.pfb><g:/TexLive/texmf-dist/fonts/type1/public/cm-super/sfbx1728.pfb><g:/TexL
+ive/texmf-dist/fonts/type1/public/cm-super/sfbx2074.pfb><g:/TexLive/texmf-dist/
+fonts/type1/public/cm-super/sfrm1000.pfb><g:/TexLive/texmf-dist/fonts/type1/pub
+lic/cm-super/sfrm1200.pfb><g:/TexLive/texmf-dist/fonts/type1/public/cm-super/sf
+ti1000.pfb>
+Output written on DesignDoc.pdf (19 pages, 18352143 bytes).
 PDF statistics:
- 198 PDF objects out of 1000 (max. 8388607)
- 171 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
- 164 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 354 PDF objects out of 1000 (max. 8388607)
+ 314 compressed objects within 4 object streams
+ 59 named destinations out of 1000 (max. 500000)
+ 334 words of extra memory for PDF output out of 10000 (max. 10000000)
 

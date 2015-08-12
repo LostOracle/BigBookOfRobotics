@@ -1,0 +1,4 @@
+ACTION=="add",SUBSYSTEMS=="usb",ATTRS{idVendor}=="20d2",ATTRS{idProduct}=="5740",ATTRS{serial}=="498326853235",SYMLINK+="robot/left_motor_controller",MODE="0666"
+ACTION=="add",SUBSYSTEMS=="usb",ATTRS{idVendor}=="20d2",ATTRS{idProduct}=="5740",ATTRS{serial}=="498626953235",SYMLINK+="robot/right_motor_controller",MODE="0666"
+ACTION=="add",SUBSYSTEMS=="usb",ATTRS{idVendor}=="15d1",ATTRS{idProduct}=="0000",SYMLINK+="robot/lidar",MODE="0666"
+ACTION=="add",SUBSYSTEMS=="usb",SUBSYSTEM=="tty",ATTRS{idVendor}=="2476",ATTRS{idProduct}=="1010",SYMLINK="robot/imu",MODE="0666"
