@@ -3,9 +3,8 @@
 \chapter{Mechanical Design}
 \label{chap:MechDes}
 
-
 \section{Design Considerations}
-The most important aspect of your robot is ensuring that it is mechanically capable of fulfilling requirements - and making sure it doesn't collapse under its own weight. No amount of sophisticated code, nor the most powerful computer in the world, can force your robot to function if the chassis is compromised. It is tempting - we fell in to this trap several times during my time on the Robotics Team - to want to design your perfect robot from the ground up. Don't. If this is your first robot, or even second or third, take my word for it and just buy a chassis.
+One hugely important aspect of your robot design is ensuring it is mechanically capable of fulfilling requirements - and making sure it doesn't collapse under its own weight. No amount of sophisticated code, nor the most powerful computer in the world, can force your robot to function if the chassis is compromised. It is tempting - we fell in to this trap several times during my time on the Robotics Team - to want to design your perfect robot from the ground up. Don't. If this is your first robot, or even second or third, take my word for it and just buy a chassis.
 
 Seriously.
 
@@ -47,7 +46,7 @@ Finally, what does it need to do? Claws, grippers, baskets, sensors, and payload
 
 \section{Kinematic Models}\label{section:kinematicModels}
 
-Now that you know what your robot needs to do, it's time to actually start designing something. For a mobile robot, kinematics are everything. There are a few common kinematic models that I want to cover in some detail, including the math. It is very important to understand - at least conceptually - the mathematics behind robot motion if you want to have any hope for autonomy.
+Now that you know what your robot needs to do, it's time to actually start designing something. For a mobile robot, kinematics are everything. There are a few common kinematic models that I want to cover in some detail.
 
 Each kinematic model has different advantages and disadvantages, so it is important to consider how your robot needs to be able to move before selecting one.
 
@@ -57,20 +56,20 @@ The simplest and most common drive system for a mobile robot is differential dri
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.75]{Differential_Drive.png}
-\label{fig:diffdrive}
+\includegraphics[width=0.6\textwidth]{Differential_Drive.png}
 \caption{Differential Drive}
+\label{fig:diffdrive}
 \end{figure}
 
 Differential Drive is very simple because it only requires two powered wheels. In the image, the front wheel is a caster wheel, or a skid-pad, and is only present to keep the robot upright.
 
 One major advantage of the differential drive paradigm is the ability to turn in place by spinning one wheel forward, and one back. However, because of the skid-pad or caster wheel, differential drive is typically only used in low-speed applications. The extra drag and wobbling of an uncontrolled wheel could cause vibrations or instability at high speeds.
 
-I won't go into the derivation of the kinematic model, but I will present it here so you can use it for reference. There are two kinematic models of interest, the forward kinematic model and the reverse.
+%I won't go into the derivation of the kinematic model, but I will present it here so you can use it for reference. There %are two kinematic models of interest, the forward kinematic model and the inverse.
 
-The reverse kinematic model tells you how the robot will move given a set of wheel velocities, and is shown in Equation \ref{eqn:diffdriveforward}.
+%The reverse kinematic model tells you how the robot will move given a set of wheel velocities, and is shown in Equation %\ref{eqn:diffdriveforward}.
 
-TODO: Add kinematics?
+%TODO: Add kinematics?
 
 \subsection{Ackermann Drive}
 
@@ -80,56 +79,75 @@ An Ackermann drive vehicle must have two front wheels which can be turned, and t
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.75]{Ackermann_Drive2.png}
-\label{fig:ackermann}
+\includegraphics[width=0.25\textwidth]{Ackermann_Drive2.png}
 \caption{Ackermann Drive}
+\label{fig:ackermann}
 \end{figure}
 
-There is one additional complication to consider when attempting to build your own Ackermann Drive system. When an Ackermann vehicle turns, each wheel is essentially drawing out the circumference of a circle. To take that thought a step further, both steering wheels will be drawing out circles, but of slightly different diameters - the difference being the center to center distance from wheel to wheel. Therefore, to avoid wheel slip while drawing two circles of different sizes, each wheel must be at a slightly different angle. The difference changes depending on how sharp of a turn is desired. Obviously designing a mechanical system to automatically handle this would be complex, and writing code to handle turning each wheel individually would be non-trivial at best. I will once again recommend buying a professionally made drive system over building one unless you have a really good reason not to.
+There is one additional complication to consider when attempting to build your own Ackermann Drive system. When an Ackermann vehicle turns, each wheel is essentially drawing out the circumference of a circle. To take that thought a step further, both steering wheels will be drawing out circles, but of slightly different radii - the difference being the center to center distance from wheel to wheel. Therefore, to avoid wheel slip while drawing two circles of different sizes, each wheel must be at a slightly different angle. The difference changes depending on how sharp of a turn is desired. Obviously designing a mechanical system to automatically handle this would be complex, and writing code to handle turning each wheel individually would be non-trivial at best. I will once again recommend buying a professionally made drive system over building one unless you have a really good reason not to.
 
-TODO: Add kinematics?
+%TODO: Add kinematics?
 
 \subsection{Skid Steer}
-
+\label{sec:skidsteer}
 Skid Steer A.K.A. Tank Drive, is another common form of locomotion. It's similar two having two differential drive systems mounted with a rigid bar between them. See Figure \ref{fig:skid_steer_drive} for an example of how Skid Steer drives. Each side, regardless of how many wheels it has, is unified, meaning that all wheels on the left drive at the same time and speed, as do all the wheels on the right. Tank drive is arguably better for an outdoor robot because it is much harder to end up high-centered when all of your wheels are powered. This also gives you more traction. However, to do anything other than drive straight forward or backward, some of the wheels have to slip. The largest disadvantage to Skid Steer is that any sort of wheel speed or encoder based odometry becomes very unreliable.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.6]{skid_steer_drive.png}
-\label{fig:skid_steer_drive}
+\includegraphics[scale=0.7]{skid_steer_drive.png}
 \caption{Skid Steer}
+\label{fig:skid_steer_drive}
 \end{figure} 
 
 However, if you have some other means of localization, like the LIDAR on the SMP robots, or the ASUS RGBD sensor, this becomes less of a problem. You end up with less drag than traditional differential drive and potentially more power because each wheel may (but doesn't have to) have its own motor. In addition, this design is much simpler to implement than Ackermann Steering or Omni-Drive, which will be discussed next. For these reasons, the SMP robots use Skid Steer. See the SMP in Figure \ref{fig:smprobot}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.1]{smprobot.png}
-\label{fig:smprobot}
+\includegraphics[width=.7\textwidth]{smprobot.png}
 \caption{SMP Robot}
+\label{fig:smprobot}
 \end{figure} 
 
 \subsection{Omni-Driv}
 
-An Omni-Drive robot is one that can move in any direction. There are several ways to construct an Omni-Drive robot, but I will focus on a four wheeled robot with fixed wheels in "traditional" positions. The Mecanum robot shown in Figure \ref{fig:mecaumrobot} - named so for the style of wheels, shown in Figure \ref{fig:mecanumwheels} - is one such robot.
+An Omni-Drive robot is one that can move in any direction. There are several ways to construct an Omni-Drive robot, but I will focus on a four wheeled robot with fixed wheels in "traditional" positions. The Mecanum robot shown in Figure \ref{fig:mecanumrobot} - named so for the style of wheels - is one such robot.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.25]{mecanumrobot.png}
-\label{fig:mecanumrobot}
+\includegraphics[width=.65\textwidth]{mecanumrobot.png}
 \caption{Mecanum Robot}
+\label{fig:mecanumrobot}
 \end{figure} 
 
-\begin{figure}[h]
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.45\textwidth]{mecanumwheels.png}
+%\caption{Mecanum Wheel}
+%\label{fig:mecanumwheels}
+%\end{figure} 
+
+Omni-Drive kinematics are complex, but I will attempt a brief summary. The rollers on this style of mecanum wheel are mounted at 45 degrees. The means that of any amount of force applied to rotating a wheel, only approximately half will be exerted along the line parallel with the direction of travel. The other half will be exerted along the perpendicular axis. The wheels are not mounted symmetrically, however. All wheels are mounted such that, if all wheels turn forward, the perpendicular forces will cancel, allowing the robot to move forward. By operating the wheels in opposing pairs, a force in any direction can be generated, allowing the robot to translate and rotate in any direction freely. Figures \ref{fig:mecanumlocomotion} shows examples of the motion generated by various combinations of wheel speeds. This is very useful for a robot, because it means there aren't any constraints that have to be considered when attempting to operate the robot autonomously. If you want to move in a certain way, you can, no questions asked.
+
+
+\begin{figure}
 \centering
-\includegraphics[scale=0.35]{mecanumwheels.png}
-\label{fig:mecanumwheels}
-\caption{Mecanum Wheel}
-\end{figure} 
+\begin{subfigure}{.5\textwidth}
+  \centering
+\includegraphics[width=\textwidth]{swedish_vector2.png}
+  \caption{Translation}
+  \label{fig:sub1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+\includegraphics[width=.5\textwidth]{swedish_vector3.png}
+  \caption{Rotation}
+  \label{fig:sub2}
+\end{subfigure}
+\caption{Mecanum Locomotion}
+\label{fig:mecanumlocomotion}
+\end{figure}
 
-Omni-Drive kinematics are complex, and out of the scope for this guide. However, I will attempt a brief summary. The rollers on a mecanum wheel are mounted at 45 degrees. The means that of any amount of force applied to rotating a wheel, only approximately half will be exerted along the line parallel with the direction of travel. The other half will be exerted along the perpendicular axis. The wheels are not mounted symmetrically, however. All wheels are mounted such that, if all wheels turn forward, the perpendicular forces will point inward and cancel, allowing the robot to move forward. By operating the wheels in opposing pairs, a force in any direction can be generated, allowing the robot to translated and rotate in any direction freely. This is very useful for a robot, because it means there aren't any constraints that have to be considered when attempting to operater the robot autonomously. If you want to move in a certain way, you can, no questions asked.
-
-While the actual mathematics for driving an Omni-Drive robot are complex, the concept is simple. Just calculate the translation you want to preform, then the rotation, and add them. In this case, the total is just the sum of the parts. Special care should be taken, however. Attempting to both drive forward and turn at full speed works fine mathematically, but once you command a wheel to drive faster than its top speed, the robot will begin to behave erratically, as the forces will no longer properly cancel.
+While the actual mathematics for driving an Omni-Drive robot are relatively complex, the concept is simple. Just calculate the translation you want to preform, then the rotation, and add them. In this case, the total is just the sum of the parts. Special care should be taken, however. Attempting to both drive forward and turn at full speed works fine mathematically, but once you command a wheel to drive faster than its top speed, the robot will begin to behave erratically as the forces will no longer properly cancel.
 
 
 

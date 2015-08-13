@@ -19,11 +19,11 @@ There are a few important terms in ROS. They have very precise definitions, but 
 
 A ROS Node is a single computational unit. Generally, this is a single process, but you can have a single node launch multiple threads if you wish. Usually, this is some chunk of code written in Python or C++, although other languages are supported. A good rule of thumb to follow is that each node should do only one task. Much like functions in a traditional program, nodes should be designed to be as small and modular as possible - while still maintaining some level of usefulness. Code reuse is king in ROS.
 
-You can see which nodes are currently active, and see some information about the node using the commands:
+You can see which nodes are currently active, and see some information about a node using the commands:
 
 \begin{lstlisting}[language=bash]
-  \$ rosnode list
-  \$ rosnode info <node>
+  $ rosnode list
+  $ rosnode info <node>
 \end{lstlisting}
 
 \subsubsection{Master}
@@ -31,10 +31,10 @@ You can see which nodes are currently active, and see some information about the
 The master is a special node, started by running the command:
 
 \begin{lstlisting}[language=bash]
-  \$ roscore
+  $ roscore
 \end{lstlisting}
 
-Do note that the process that starts roscore does not end, so that terminal will be unusable as long as roscore is running. It is inadvisable to detatch the roscore process from the terminal when running manually, because you won't be able to see warnings or errors. The master is essential to running all other ROS commands. This node is responsible for setting up channels of communication between the other nodes in the system. However, it does not take an active role in that communication once it is established.
+Do note that the process that starts roscore does not end, so that terminal will be unusable as long as roscore is running. It is inadvisable to detatch the roscore process from the terminal when running manually, because you won't be able to see warnings or errors. The master is essential to running all other ROS commands, and (unless you're very sneaky) only one master can run on a computer. This node is responsible for setting up channels of communication between the other nodes in the system. However, it does not take an active role in that communication once it is established.
 
 \subsubsection{Publisher}
 
@@ -53,8 +53,8 @@ A topic is intended for long-term, continuous communication. For one-shot, or ve
 You can view which topics are currently active and get information about them using:
 
 \begin{lstlisting}[language=bash]
-  \$ rostopic list
-  \$ rostopic info <topic>
+  $ rostopic list
+  $ rostopic info <topic>
 \end{lstlisting}
 
 \subsubsection{Workspace}
@@ -75,7 +75,7 @@ A namespace is a way to group related nodes and topics. Generally, we create a n
 
 \subsubsection{Parameters}
 
-Most nodes have parameters, much like command line arguments in C/C++. In ROS, these parameters are handled as key-value pairs. Each parameter has a name and a value. One example is the joy topic name, addressed in Section \ref{sec:makeitgo}.
+Most nodes have parameters, much like command line arguments in C/C++. In ROS, these parameters are handled as key-value pairs. Each parameter has a name and a value.
 
 \subsubsection{Driver}
 
@@ -85,13 +85,13 @@ A driver is a very special node. Drivers are the only nodes in ROS that are not 
 
 A message is a single packaged unit of information to be sent over a topic. ROS has a large set of message types built in to the core system. In general, you won't want to define your own messages. Not only is it somewhat difficult to do, your code won't work with nodes written by other people. In ROS, code re-usability and modularity is king. Again, try to avoid creating your own message types.
 
-Common message types include: joy, Point3D, twist, quaternion, and many others
+Common message types include: joy, Point3D, twist, quaternion, and many others.
 
 The standard types like int, bool, string, and arrays are also supported, but you end up using those rarely in robotics.
 
 \subsubsection{Distribution}
 
-There are several versions of ROS. Most of my work was done in ROS Indigo. As of early August 2015, the wiki still said ROS Jade was on track to be released in May of 2015, so we can probably expect to see that soon, but not yet.
+There are several versions of ROS. Most of my work was done in ROS Indigo. ROS Jade has been released, but it is still considered (last time I looked) unstable and Indigo is considered current.
 
 As a side note, the ROS mascot is a turtle, and the distributions are following alphabetical progression. The versions thus far have been:
 
@@ -99,10 +99,10 @@ As a side note, the ROS mascot is a turtle, and the distributions are following 
 \item{ROS Box Turtle - March 2, 2010}
 \item{ROS C Turtle - August 2, 2010}
 \item{ROS Diamondback - March2, 2011}
-\item{ROS Electric Emys (usually just called Electric) - August 30, 2011}
+\item{ROS Electric Emys - August 30, 2011}
 \item{ROS Fuerte Turtle - April 23, 1012}
-\item{ROS Groovy Galapagos "Groovy" - December 31, 2012}
-\item{ROS Hydro Medusa "Hydro" - September 4, 2013}
+\item{ROS Groovy Galapagos - December 31, 2012}
+\item{ROS Hydro Medusa - September 4, 2013}
 \item{ROS Indigo Igloo (Stable) - July 22, 2014}
 \item{ROS Jade Turtle (Unstable) - May 23, 2015?}
 \end{enumerate}
@@ -114,9 +114,7 @@ Also, if you think ROS is complicated and hard to use now, take Fuerte or Electr
 
 Launch files are essential when putting together a bunch of nodes to run a robot. Listing \ref{lst:launchfile} shows the launch file used by both SMP robots.
 
-\begin{lstlisting}[language=bash]
-\label{lst:launchfile}
-\caption{SMP Launch File}
+\begin{lstlisting}[language=bash,caption=SMP Launch File, label=lst:launchfile,breaklines=true]
 <?xml version="1.0"?>
 <launch>
   <group ns="$(env ROBOT)">
@@ -175,11 +173,11 @@ The launch tag is just the root of the document and is required to be present in
 
 \subsubsection{<group ns="\$(env ROBOT)">}
 
-This is one of the more obscure tags. What this is doing is assigning everything in the block to a certain namespace. That namespace is defined by the environment variable ROBOT. On the SMP and Mecanum robots, ROBOT is defined in the bringup service. We'll talk about that in Section \ref{sec:bringupservice}.
+This is one of the more obscure tags. What this is doing is assigning everything in the block to a certain namespace. That namespace is defined by the environment variable ROBOT. On the SMP and Mecanum robots, ROBOT is defined in the bringup service. We'll talk about that in Section \ref{sec:autorunatboot}.
 
 \subsubsection{<node...>}
 
-The node tag defines that this block pertains to launching a single node. If you want to launch multiple nodes of the same type, each node needs to make a unique appearance in the launch file. They do not need to be given unique names. ROS automatically appends a large pseudo-random number to each node name to avoid name collisions. Topics, however, will collide if not named uniquely. This allows multiple nodes to speak or listen to the same topic.
+The node tag defines that this block pertains to launching a single node. If you want to launch multiple nodes of the same type, each node needs to make a unique appearance in the launch file. They do not need to be given unique names. ROS automatically appends a large pseudo-random number to each node name to avoid name collisions. Topics, however, will collide if not named uniquely. This allows multiple nodes to speak over or listen to the same topic.
 
 \subsubsection{pkg, name, type}
 
@@ -243,7 +241,7 @@ You can supply a value for ROS\_MASTER\_URI in this way as well.
  
 \section{Running ROS}
 
-When running ROS, there are a few important steps you must make in \textit{each} terminal you open. Another option is to add these commands to your ~/.bashrc file so they are automatically run whenever a new terminal is opened.
+When running ROS, there are a few important steps you must make in \textit{each} terminal you open. Another option is to add these commands to your /user/home/.bashrc file so they are automatically run whenever a new terminal is opened.
 
 \subsubsection{Sourcing}
 
@@ -261,7 +259,7 @@ To use ROS binaries you compiled, you need to source the setup.bash in your work
 
 \subsubsection{Exports}
 
-There are two very important system variables that must be exported for ROS to function correctly. The ROS\_IP and ROS\_MASTER\_URI. The ROS\_IP tells the master at what IP address the nodes launched on the local machine can be found. The ROS\_MASTER\_URI tells the nodes on the local machine where to find the master. If you are having messages along the lines of "Failed to contact master" these are a good place to start. To set your ROS\_IP run:
+There are two very important system variables that must be exported for ROS to function correctly. The ROS\_IP and ROS\_MASTER\_URI. The ROS\_IP tells the master at what IP address the nodes launched on the local machine can be found. The ROS\_MASTER\_URI tells the nodes on the local machine where to find the master. If you are having messages along the lines of "Failed to contact master" these are a good place to start. To find your ip address on the network on interest, run:
 
 \begin{lstlisting}[language=bash]
   $ ip addr
@@ -281,7 +279,7 @@ Once you find your address, set the ROS\_IP with the command:
   $ export ROS_IP=<ip>
 \end{lstlisting} 
 
-The ROS\_MASTER\_URI is a bit trickier. First, you have to find the IP for the master node the same way you found the IP for ROS\_IP. Of course, it needs to be on the machine the master will be running on. If you're running everything locally, the IPs will be the same. However, for reasons that are probably good but unknown to me, the ROS\_MASTER\_URI is treated as a URL instead of an IP address. So the command looks like this instead:
+The ROS\_MASTER\_URI is a bit trickier. First, you have to find the IP for the master node the same way you found the IP for ROS\_IP. If you're running everything locally, the IPs will be the same. However, for reasons that are probably good but unknown to me, the ROS\_MASTER\_URI is treated as a URL instead of an IP address. So the command looks like this instead:
 
 \begin{lstlisting}[language=bash]
   $ export ROS_MASTER_URI=http://<ip>:11311
@@ -310,9 +308,10 @@ However, this does leave your machine vulnerable. If your machine is ever expect
   $ sudo systemctl start firewalld
 \end{lstlisting} 
 
-\section{Making a ROS Robot}
+%Pretty sure I already covered this elsewhere in more detail
+%\section{Making a ROS Robot}
 
-Now you have enough knowledge to get by with. The next step is actually starting to put something together. This section assumes you already have Linux and ROS installed on whatever computer you intend to use as the brain of the robot.
+%Now you have enough knowledge to get by with. The next step is actually starting to put something together. This section %assumes you already have Linux and ROS installed on whatever computer you intend to use as the brain of the robot.
 
 %systemd calls roslaunch /etc/systemd/system/smp_bringup.service
 

@@ -4,14 +4,16 @@
 \label{chap:intro}
 
 \section{Purpose}
-Building a sophisticated robot can be a complex and potentially daunting task. While a single afternoon can be sufficient to strap a few servos and an arduino to a chassis, doing anything interesting required an investment of both time and resources. As the cost of a robot increases, it becomes more important to have a solid plan to follow. This document attempts to outline the major phases of robotics development, as well as providing the basic information required to build a basic robot featuring ROS. It should be noted that this document is entirely a product of my own experiences - mostly the failures - during my time on the Robotics team, in the hope that others will not repeat them. That being said, this document is neither expected to be entirely complete nor perfectly accurate. It is a certain truth that failure is a better teacher than success, but experience is the best teacher of all - preferably someone else's.
+Building a sophisticated robot can be a complex and potentially daunting task. While a single afternoon can be sufficient to strap a few servos and an arduino to a chassis, doing anything interesting requires an investment of both time and resources. As the cost of a robot increases, it becomes more important to have a solid plan to follow. This document attempts to outline the major phases of robotics development, as well as providing the basic information required to build a basic robot featuring ROS. It should be noted that this document is entirely a product of my own experiences - mostly the failures - during my time on the Robotics team, in the hope that others will not repeat them. That being said, this document is neither expected to be entirely complete nor perfectly accurate. It is a certain truth that failure is a better teacher than success, but experience is the best teacher of all - preferably someone else's.
 
 The major sections are as follows:
 \begin{itemize}
-\item{Mechanical Design - Basic mobile robot kinematics and design principles.}
+\item{Mechanical Design - Basic mobile robot kinematics and a few design suggestions.}
 \item{Electrical Design - How not start your robot on fire. Probably.}
-\item{Setting Up The Odroid - How to go from a fresh Odroid to one running Fedora 22 and ROS}
+\item{Setting Up The Odroid - How to go from a fresh Odroid to one running Fedora 21 and ROS}
 \item{ROS Architecture - The basic design for a remote controlled robot in ROS}
+\item{Robot Parts - A summary of the common essential components for a mobile RC robot.}
+\item{Demo Day - A brief set of instructions for getting the robot running under RC on demo day.}
 \end{itemize} 
 
-This guide should be delivered alongside its companion document - Robot Paper Template - and potentially the example I created using that template - Mecanum and SMP Design Document. All of the code referenced in this document is available on the SDSMT Robotics Team GitHub pages - SMD-ROS-DEVEL and SMD-ROBOTICS. \\
+This guide should be delivered alongside its companion document - Robot Design Document Template - and potentially the example I created using that template - Mecanum and SMP Design Document. All of the code referenced in this document is available on the SDSMT Robotics Team GitHub pages - SMD-ROS-DEVEL and SMD-ROBOTICS, or provided on the GitHub page for this document: \url{https://github.com/LostOracle/BigBookOfRobotics}. The one exception to this is the joy\_to\_twist node, which is currently available via \url{https://github.com/cottsay/joy_to_twist} \\

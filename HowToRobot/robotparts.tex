@@ -29,7 +29,7 @@ This one is a bit tricky conceptually, but easy to deal with in practice. Motors
 
 \subsubsection{RPM}
 
-Revolutions Per Minute. This is basically the speed at which the output shaft of (generally speaking) the gearbox will turn when the motor is spinning with no resistance. When you load it down with a motor, you can expect this number to drop considerably unless the motor has a phenomenal amount of torque.
+Revolutions Per Minute. This is basically the speed at which the output shaft of (generally speaking) the gearbox will turn when the motor is spinning with no resistance. When you load it down, you can expect this number to drop considerably unless the motor has a phenomenal amount of torque.
 
 \subsubsection{Gear Ratio}
 
@@ -53,7 +53,7 @@ Servos deserve a mention here because they are a very simple budget option for s
 
 \section{Power}
 
-Powering a robot is tricky business. We talked about batteries in Section \ref{sec:batteries}, which should get you at least as that far, but there are more considerations to be made.
+Powering a robot is tricky business. We talked about batteries in Section \ref{sec:batteries}, but there are more considerations to be made.
 
 \subsection{Regulators}
 \label{sec:regulators}
@@ -85,7 +85,7 @@ There are a few important things to look for in a motor controller.
 
 \subsubsection{Channels}
 
-A motor controller generally has 1, 2 or 4 channels. This is the number of motors that the controller can control independantly. That doesn't necessarily mean more channels is better. I generally recommend using two 2-channel motor controllers over a single 4-channel motor controller. 4-channel motor controllers are generally either a) really expensive, or b) actually just two 2-channel controllers on a single board. If option b) is implemented poorly, you actually end up with a lower maximum power output. I once bought a 4-channel motor controller that claimed it could handle 2A per channel, but if you pulled more than 4A total, a power trace that carried power from the controller A side to the controller B side would blow up.
+A motor controller generally has 1, 2 or 4 channels. This is the number of motors that the controller can control independantly. That doesn't necessarily mean more channels is better. I generally recommend using two 2-channel motor controllers over a single 4-channel motor controller. 4-channel motor controllers are generally either a) really expensive, or b) actually just two 2-channel controllers on a single board. If option b) is implemented poorly, you actually end up with a lower maximum power output. I once bought a 4-channel motor controller that claimed it could handle 2A per channel, but if you pulled more than 4A total, a power trace that carried power from the A side to the B side would blow up.
 
 \subsubsection{Max Current}
 
@@ -93,7 +93,7 @@ This one is pretty self-explanatory. Make sure this number, generally indicated 
 
 \subsubsection{Voltage}
 
-There are actually two imprtant values here as well. The supply voltage, and the logic voltage. The supply voltage is the voltage the motor controller will use to drive the motors, and most motor controllers can actually handle a pretty wide range of input values. Interanlly, there's just a few MOSFETs and zener diodes that actually have to interface with that voltage level. Just make sure that the battery voltage you will be supplying to the motor controller falls within the acceptable range. The logic voltage is the voltage the controller requires to power the actually controller board. This varies depending on the controller, although typical values are 3.3V, 5V, or 12V. Again, just make sure the voltage you are supplying falls in the allowable range on the motor controller datasheet. In some instances, motor controllers have built in DC converters that allow them to draw power from the main supply voltage.
+There are actually two important values here as well. The supply voltage, and the logic voltage. The supply voltage is the voltage the motor controller will use to drive the motors, and most motor controllers can actually handle a pretty wide range of input values. Internally, there's just a few MOSFETs and zener diodes that actually have to interface with that voltage level. Just make sure that the battery voltage you will be supplying to the motor controller falls within the acceptable range. The logic voltage is the voltage the controller requires to power the actually controller board. This varies depending on the controller, although typical values are 3.3V, 5V, or 12V. Again, just make sure the voltage you are supplying falls in the allowable range on the motor controller datasheet. In some instances, motor controllers have built in DC converters that allow them to draw power from the main supply voltage.
 
 \subsubsection{Quadrature Decoding}
 

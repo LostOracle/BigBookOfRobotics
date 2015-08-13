@@ -5,13 +5,13 @@
 
 \section{Purpose Of This Chapter}
 
-This chapter is intended to be a guide for setting up an Odroid XU3 with Fedora 21, using an EMMC as the storage device. Step by step guides for using an SD card exist in plenty on the internet, and only the first two steps are any different. The steps should work with Fedora 22 as well, but Fedora 22 was still very new when I last worked with the Odroids and wasn't ready for installation on an arm architecture yet. For installation on other Odroid platforms, the steps should be very similar, but may not be exactly the same.
+This chapter is intended to be a guide for setting up an Odroid XU3 with Fedora 21, using an EMMC as the storage device. Step by step guides for using an SD card exist in plenty on the internet, and only the first few steps are any different. The steps should work with Fedora 22 as well, but Fedora 22 was still very new when I last worked with the Odroids and wasn't ready for installation on an arm architecture yet. For installation on other Odroid platforms, the steps should be very similar, but may not be exactly the same.
 
 \section{Before You Begin}
 
 You will need the following items to complete this guide:
 \begin{enumerate}
-\item{Odroid XU3}
+\item{Odroid XU3 Lite}
 \item{USB to MicroSD Adapter}
 \item{MicroSD to EMMC Adapter}
 \item{EMMC}
@@ -24,11 +24,11 @@ Check your version of Fedora before beginning. You can do this using the command
   $ cat /etc/issue
 \end{lstlisting}
 
-You want to check if you're running Fedora 20 or Fedora 21+. This will be important later.
+You want to check if you're running Fedora 20 or Fedora 21+. This will be important in the next step.
 
 \section{Obtain the Fuser}
 
-The Fuser is a utility written by Scott Logan to set up the EMMC in such a way that the Fedora image fits on the EMMC efficiently. It sets the "fuse" bit, which are sort of like software-writable settings on the EMMC. Modifying these bits manually is pretty difficult, which is why you'll want to use the Fuser to do it for you.
+The Fuser is a utility written by Scott Logan to set up the EMMC in such a way that the Fedora image fits on the EMMC efficiently. It sets the "fuse" bits, which are sort of like software-writable settings on the EMMC. Modifying these bits manually is pretty difficult, which is why you'll want to use the Fuser to do it for you.
 
 On Fedora 21+, run:
 \begin{lstlisting}[language=bash]
@@ -40,7 +40,7 @@ These two commands download repository information for the smd-odroid-release re
 
 Of Fedora 20, the repository headers will not automatically download. You'll have to download the fuser more directly. Instead run:
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,breaklines=true]
   $ sudo yum install http://csc.mcs.sdsmt.edu/smd-odroid/fedora/linux/21/x86_64/odroid-xu3-sd-fuser-0.2.0-1.fc21.noarch.rpm
 \end{lstlisting}
 
@@ -90,17 +90,17 @@ Next, you need to unmout the EMMC partitions or they won't write correctly. Do s
   $ sudo umount /dev/mmcblkXp*
 \end{lstlisting}
 
-Be careful with this next command. dd is a very powerful tool, and it can totally erase your harddrive if you let it. Mostly just make sure you don't accidentally point it at the wrong device. if is the input file - the image you uncompressed. of is the target device, the mmblkX we identified earlier. Substitute your value for X. bs is the block size. Just leave it alone.
+Be careful with this next command. dd is a very powerful tool, and it can totally erase your harddrive if you let it. Mostly just make sure you don't accidentally point it at the wrong device. "if" is the input file - the image you uncompressed. "of" is the target device, the mmblkX we identified earlier. Substitute your value for X. "bs" is the block size. Just leave it alone.
 
 \begin{lstlisting}[language=bash]
   $ sudo dd if=<foo>.img of=/dev/mmcblkX bs=8M
 \end{lstlisting}
 
-This takes a while. On the order of 3 or 4 minutes when I did it last. Be patient. When it finishes, you should expect to see:
+This takes a while. On the order of ~1.5 minutes when I did it last. Be patient. When it finishes, you should expect to see:
 \begin{lstlisting}[language=bash]
     204+1 records in
-	204+1 records out
-	1713373184 bytes (1.7 GB) copied, 91.7598 s, 18.7 MB/s
+    204+1 records out
+    1713373184 bytes (1.7 GB) copied, 91.7598 s, 18.7 MB/s
 \end{lstlisting}
 
 Next, to make sure the OS has flushed all the buffers to the device, run:
@@ -119,25 +119,25 @@ At this point, you have a functional EMMC with Fedora 21 installed. Go ahead and
 
 The ROS build for arm isn't in with the normal ROS or Linux repositories. It was in fact hosted from, when I left, a set of 10 Odroids over in M113. To install this repository, run:
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,breaklines=true]
   $ sudo yum install http://csc.mcs.sdsmt.edu/smd-pub/fedora/linux/21/armhfp/smd-ros-release-21-2.noarch.rpm
 \end{lstlisting}
 
 You'll also need rpm fusion, which is an extended set of packages for Fedora not bundled in to the main set of rpms. To install those, run:
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,breaklines=true]
   $ sudo yum localinstall --nogpgcheck http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm  -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm	
 \end{lstlisting}
 
 Now, you should be able to use yum to install pretty much any ROS Fedora package. The following command will install the basic starting ROS packages. It doesn't not include PCL or Gazebo, but you shouldn't be running those on Odroids anyway.
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,breaklines=true]
   $ sudo yum install ros-indigo-robot	
 \end{lstlisting}
 
 If you want to do on-board compiling, which you almost certainly will unless you've already finished development and are just deploying functional binaries, run the following command:
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,breaklines=true]
   $ sudo yum install python-rosdep python-rosinstall_generator python-wstool python-rosinstall @buildsys-build	
 \end{lstlisting}
 
@@ -145,18 +145,22 @@ That's it. Installing ROS is way easier than it used to be. If in doubt, here's 
 
 This is a fairly basic install, so there may be some unresolved dependencies. If you're having dependency issues, run the following command where <src> is a directory containing ROS packages.
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,breaklines=true]
   $ rosdep install --from-path <src> --ignore-src	
 \end{lstlisting}
 
 \section{Setting up a static IP}
 
-One thing you will probably want to do at some point is to give the Odroid a static ethernet IP address. This saves you from needing to hunt down a serial cable to get in and run ip addr every time you connect it to a new network. This is, thankfully, very easy. Just find the /etc/network/interfaces file. It should look something like:
-\begin{lstlisting}[language=bash]
+One thing you will probably want to do is give your Odroid a static IP address on the wireless router - assuming you're mounting one on the robot. Unfortunately, the method for this is different for each router. Generally, you'll need to find a way to make the router recognize the Odroid's MAC address, and give it a dedicated IP slot. This isn't actually very hard, but you will probably have to Google your particular router model for exact instructions.
+
+If you don't intend to connect the Odroid to a router, but want to give it a static IP address for connecting an Ethernet cord directly to it from a computer, you can modify the /etc/network/interfaces file. It should look something like: 
+%One thing you will probably want to do at some point is to give the Odroid a static ethernet IP address. This saves you %from needing to hunt down a serial cable to get in and run ip addr every time you connect it to a new network. This is, %thankfully, very easy. Just find the /etc/network/interfaces file. It should look something like:
+
+\begin{lstlisting}[language=bash,breaklines=true]
 # The loopback network interface
 auto lo
 iface lo inet loopback
-\begin{lstlisting}[language=bash]
+
 # The primary network interface
 auto eth0
 iface eth0 inet static
@@ -164,14 +168,16 @@ iface eth0 inet static
  netmask 255.255.255.0
 \end{lstlisting}
 
-Yours probably doesn't have an iface eth0 entry yet. Add one, and replace the address with whatever address you want the odroid to have.
+Yours probably doesn't have an iface eth0 entry yet. Add one, and replace the address with whatever address you want the Odroid to have.
+
+Note: This can make routers very unhappy. Only do this if you're intending to connect directly to a computer via Ethernet. You may have to make configuration changes on the computer, but this also varies depending on your internet setup for the machine.
 
 
 \section{Common Errors}
 
 There are a handful of pretty common errors that I found solutions for:
 
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=bash,breaklines=true]
   One of the configured repositories failed (Fedora 21 - x86_64 - Updates),
 and yum doesn't have enough cached data to continue. At this point the only
 safe thing yum can do is fail. There are a few ways to work "fix" this:
@@ -206,7 +212,7 @@ So this is a pretty scary error, but the actual cause is pretty tame. This happe
   $ date
 \end{lstlisting}
 
-If your Odroid is kickin' it in the '70s. You've found the problem. This is an easy fix. Run the following commands. The first updates the current time using the ntp server on campus. The second updates the hardware clock, which persists between power cycles provided you have that CMOS battery installed. If not, you'll have to do this every time.
+If your Odroid is kickin' it in the '70s, you've found the problem. This is an easy fix. Run the following commands. The first updates the current time using the ntp server on campus. The second updates the hardware clock, which persists between power cycles provided you have that CMOS battery installed. If not, you'll have to do this every time.
 
 \begin{lstlisting}[language=bash]
   $ ntpdate ntp.sdsmt.edu

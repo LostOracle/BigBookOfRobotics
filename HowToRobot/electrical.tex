@@ -4,10 +4,10 @@
 \label{chap:ElecDes}
 
 \section{Design Considerations}
-The most important aspect of your robot is ensuring that it is electrically capable of fulfilling requirements - and making sure it doesn't light itself on fire or electrocute anyone. The best mechanical design in the world is useless if there's nothing to supply power to the wheels, and your computer is just a hunk of plastic and metal if it doesn't get the right amount of power. While electrical design for a robot is not very complicated (unless you want it to be), it does require some fundamental knowledge.
+Another important aspect of your robot is ensuring that it is electrically capable of fulfilling requirements - and making sure it doesn't light itself on fire or electrocute anyone. The best mechanical design in the world is useless if there's nothing to supply power to the wheels, and your computer is just a hunk of plastic and metal if it doesn't get the right amount of power. While electrical design for a robot is not very complicated (unless you want it to be), it does require some fundamental knowledge.
 
 \subsection{The Basics}
-We'll start off easy. I'm going to restrict the discussion here to (relatively) low voltage DC circuits. Within that domain, there are three very important terms. Voltage, measured in Volts (V), Current, measured in Amperes "Amps" (A), and Resistance, measured in Ohms $\Omega$. A very smart German dude by the name of Georg Ohm came up with probably the most important (for us at least) law in all of electronics back in 1827, and published it in his book Die \textit{galvanische Kette, mathematisch bearbeitet}. (Translated to English, that's \textit{The Galvanic Circuit Investigated Mathematically}). The book is available online, but I wouldn't recommend it unless you're in for some heavy reading. It was written in the early 1800s after all. The important part - the law we care about here - is called Ohm's law and is shown in Equation \ref{eqn:ohmslaw}.
+We'll start off easy. I'm going to restrict the discussion here to (relatively) low voltage DC circuits. Within that domain, there are three very important terms. Voltage, measured in Volts (V), Current, measured in Amperes "Amps" (A), and Resistance, measured in Ohms $\Omega$. A very smart German dude by the name of Georg Ohm came up with probably the most important (for us at least) law in all of electronics back in 1827, and published it in his book \textit{Die galvanische Kette, mathematisch bearbeitet}. (Translated to English, that's \textit{The Galvanic Circuit Investigated Mathematically}). The book is available online, but I wouldn't recommend it unless you're in for some heavy reading. It was written in the early 1800s after all. The important part - the law we care about here - is called Ohm's law and is shown in Equation \ref{eqn:ohmslaw}.
 
 \begin{equation}
 V = IR
@@ -19,9 +19,9 @@ That's it. That's all there is to it. Voltage (V) equals Current (I) times Resis
 Ok, so now we have the fundamental law of the universe, but so what? What are all these funky terms? Let's talk more about that. Sparkfun also has a pretty excellent page explaining this, so if my explanation doesn't work out for you, just search for \textit{Sparkfun Voltage, Current, Resistance, and Ohm's Law}.
 
 \subsection{Voltage}
-Voltage behaves very much like water pressure in a pipe. With water, pressure - or more accurately, pressure differential - is what causes water to flow. However, just because there is pressure doesn't mean the water actually flows. It's just a measure of how much the water \textit{wants} to flow. For example, consider a completely full, sealed container of water. Now shrink the volume of the container by half without letting any water out. Some laws that I vaguely remember from chemistry say that the pressure has to increase. (Or temperature, but likely it will be some of both). Now there's more pressure, but the container is still sealed with no route for the water to escape, so there's no flow.
+Voltage behaves very much like water pressure in a pipe. With water, pressure - or more accurately, pressure differential - is what causes water to flow. However, just because there is pressure doesn't mean the water actually flows. It's just a measure of how much the water \textit{wants} to flow. For example, consider a completely full, sealed container of water. Now shrink the volume of the container by half without letting any water out. Some laws that I vaguely remember from chemistry say that the pressure has to increase. (Or temperature, but we're going to ignore that bit). Now there's more pressure, but the container is still sealed with no route for the water to escape, so there's no flow.
 
-Voltage behaves almost exactly the same. Except instead of water, we have a high density of electrons. Because they are negatively charged, and like charges repel one another, electrons like to spread out as much as they can to reach the minimum energy configuration. Sort of like when you drop a glass of water on the floor, and the water spreads out to get as low to the ground as possible - thereby reducing it's gravitational potential energy and reaching a minimal energy state. So, compressing a lot of electrons in to a small space creates this electrical pressure - voltage, or electromotive force for people who like words with many syllables.
+Voltage behaves almost exactly the same. Except instead of water, we have a high density of electrons. Because they are negatively charged, and like charges repel one another, electrons like to spread out as much as they can to reach the minimum energy configuration. Sort of like when you drop a glass of water on the floor, and the water spreads out to get as low to the ground as possible - thereby reducing it's gravitational potential energy and reaching a minimal energy state. So, compressing a lot of electrons in to a small space creates this electrical pressure - voltage, or "electromotive force" for people who like words with many syllables.
 
 The common source of voltage differentials in mobile robotics are batteries or DC power supplies.
 
@@ -33,50 +33,60 @@ If voltage is pressure, than current is the amount of flow. If there is a pressu
 
 Resistance is not a property of the electricity itself, but a property of the material it flows through. The easy analogy is to think of the resistance as the size of the pipe. A narrower pipe allows less water to flow through. Likewise, a material with higher resistances "resists" the flow of electrons more strongly. In low power DC applications, you can generally assume that wires have a resistance of 0.
 
-Often, we will use components called "Resistors" to purposefully introduce current in a circuit. This is particularly useful when we have components like LEDs (light-emitting diodes) which can only handle so much current. We'll have an example circuit a little later demonstrating how to choose the right resistor for an LED.
+Often, we will use components called "Resistors" to purposefully introduce resistance in a circuit. This is particularly useful when we have components like LEDs (light-emitting diodes) which can only handle so much current. We'll have an example circuit a little later demonstrating how to choose the right resistor for an LED.
 
-There is one more thing you need to know about resistors before we move on. What happens if you have more than one? There are two ways to hook up multiple resistors. You can put them in parallel or in series. In Figure \ref{fig:seriesresistors} - from wikipedia, which covers this subject in great depth- there are N resistors hooked up in series. This case is very easy. The value of the resistors just adds up, so you can pretend like you have one big resistors with a value that is the sum of all the resistors in series. Because I like math, the oh-so-difficult math for this is shown in Equation \ref{eqn:seriesresistors}.
+There is one more thing you need to know about resistors before we move on. What happens if you have more than one? There are two ways to hook up multiple resistors. You can put them in parallel or in series. Figure \ref{fig:resistorscombinations} shows both configurations. When resistors are hooked up in series, the value of the resistors just adds up, so you can pretend like you have one big resistors with a value that is the sum of all the resistors in series. For completeness, this is shown in Equation \ref{eqn:seriesresistors}. When resistors are hooked up in parallel, the resistance of the set of resistors actually decreases. I'll explain why a bit more intuitively in the next section, but the math for calculating the resistance of a set of parallel resistors is shown in Equation \ref{eqn:parallelresistors}.
 
 \begin{equation}
 R = R_1 + R_2 + \cdots + R_n
 \label{eqn:seriesresistors}
 \end{equation}
 
-\begin{figure}[h]
+\begin{equation}
+\frac{1}{R} = \frac{1}{R_1} + \frac{1}{R_2} + \cdots + \frac{1}{R_n}
+\label{eqn:parallelresistors}
+\end{equation}
+
+\begin{figure}
 \centering
-\includegraphics[scale=0.75]{seriesresistors.png}
-\label{fig:seriesresistors}
-\caption{Resistors In Series}
+\begin{subfigure}{.5\textwidth}
+  \centering
+\includegraphics[width=\textwidth]{seriesresistors.png}
+  \caption{Series}
+  \label{fig:seriesresistors}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+\includegraphics[width=.5\textwidth]{parallelresistors.png}
+  \caption{Parallel}
+  \label{fig:parallelresistors}
+\end{subfigure}
+\caption{Resistor Combinations}
+\label{fig:resistorscombinations}
 \end{figure}
 
-The other way to hook up resistors is in parallel. This one is a little more complicated. An example is shown in Figure \ref{fig:parallelresistors}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.75]{parallelresistors.png}
-\label{fig:parallelresistors}
-\caption{Resistors In Parallel}
-\end{figure}
 
 \subsubsection{Putting It All Together}
 
-Example time! First, look at the picture in Figure \ref{fig:voltagedivider}. In that example, there are multiple paths for the electricity to follow. Meditating on Ohm's law for a while will eventually lead you to the mathematical reason behind this, but for now just take my word for it: the electricity divides itself up among the possible paths inversely proportional to the resistance of each path. Ohm's law requires this, and it's actually convenient for us because it generates the least possible waste heat - but that's an advanced topic I won't cover here. Let's attach some real numbers to this example. Consider a circuit with a 10V voltage source and 2 resistors in parallel, one with 5$\Omega$ and one with 10$\Omega$. This example circuit is shown in Figure \ref{fig:parallelresistorsexample}. Reducing the two resistors with Equations \ref{eqn:parallelresistors}, gives the circuit showin in Figure \ref{fig:parallelresistorsexamplemerged}.
+Example time! First, look at the picture in Figure \ref{fig:parallelresistorsexample}. In that example, there are multiple paths for the electricity to follow. Meditating on Ohm's law for a while will eventually lead you to the mathematical reason behind this, but for now just take my word for it: the electricity divides itself up among the possible paths inversely proportional to the resistance of each path. Ohm's law requires this, and it's actually convenient for us because it generates the least possible waste heat - but that's an advanced topic I won't cover here. Let's attach some real numbers to this example. Consider a circuit with a 10V voltage source and 2 resistors in parallel, one 5$\Omega$ and one 10$\Omega$. This example circuit is shown in Figure \ref{fig:parallelresistorsexample}. Reducing the two resistors with Equations \ref{eqn:parallelresistors}, gives the circuit showin in Figure \ref{fig:parallelresistorsexamplemerged}.
 
 
 \begin{figure}
 \centering
-\begin{minipage}{.5\textwidth}
-\centering
-\includegraphics[scale=0.75]{parallelresistorsexample.png}
-\label{fig:parallelresistorsexample}
-\caption{Parallel Resistors Example}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
-\centering
-\includegraphics[scale=0.75]{parallelresistorsexamplemerged.png}
-\label{fig:parallelresistorsexamplemerged}
-\caption{Parallel Resistors Example Reduced}
-\end{minipage}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.75]{parallelresistorsexample.png}
+  \caption{Parallel Resistors}
+  \label{fig:parallelresistorsexample}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[scale=0.75]{parallelresistorsexamplemerged.png}
+  \caption{Reduced}
+  \label{fig:parallelresistorsexamplemerged}
+  \end{subfigure}
+\caption{Parallel Resistor Example}
+\label{fig:resistorscombinations}
 \end{figure}
 
 There are a few things to think about in this example. First, note that I3 in Figure \ref{fig:parallelresistorsexample} must be equivalent to the current I in Figure \ref{fig:parallelresistorsexamplemerged} since they are in truth the same circuit. In Figure\ref{fig:parallelresistorsexamplemerged}, we can easily solve for I using Ohm's law.
@@ -106,20 +116,20 @@ So why do we care about the LED being a semi-conductor? Because semi-conductors 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.75]{ledcircuit.png}
-\label{fig:ledcircuit}
 \caption{LED Proper Hookup}
+\label{fig:ledcircuit}
 \end{figure}
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.75]{ledcircuitvoltagedrop.png}
-\label{fig:ledcircuitvoltagedrop}
 \caption{LED Proper Hookup - With Voltage Drop}
+\label{fig:ledcircuitvoltagedrop}
 \end{figure}
 
-In this case we can just sum the two voltage sources, and pretend we have a 4.3V power supply. So, we have a 4.3V source, and we want a 10mA current. Easy, right? Just use Ohm's law as shown in Equation \ref{eqn:solveforr}.
+In this case we can just sum the two voltage sources, and pretend we have a 4.3V power supply. So, we have a 4.3V source, and we want a 10mA current. Easy, right? Just use Ohm's law as shown in Equation \ref{eqn:findledr}.
 
-\begin{equation} \label{eqn:solveforr}
+\begin{equation} \label{eqn:findledr}
 \begin{split}
 V = IR \\
 4.3 = (.01)R\\
@@ -128,17 +138,23 @@ R = 430\Omega
 \end{split}
 \end{equation}
 
-It so happens that LEDs are generally pretty robust. You can probably go plus or minus about 50\% on that R value. A smaller value with make the LED brighter, while a larger value will make it dimmer. Too large a value will burn it out. An excessively large value \textit{may} make it explode. I highly recommend trying it once under controlled circumstances. Wear eye protection! There will probably be exactly one or two pieces of shrapnel, but it would really suck to get one in your eye. For best results, connect the LED to a power supply and slowly turn up the voltage. You'll get to see all phases of operation for the LED. Below 0.7V it probably will not turn on. From 0.7 to somewhere around 4-6V it will steadily get brighter. At some point it will reach a maximum brightness and then begin to heat up, at which point it will probably start to dim. At some point after that, it will go out. Cranking up the voltage more will (probably) cause it to explode. Sometimes the conductive element inside just melts and you don't get an explosion. It really depends on the LED.
+It so happens that LEDs are generally pretty robust. You can probably go plus or minus about 50\% on that R value. A smaller value with make the LED brighter, while a larger value will make it dimmer. Giving and LED too much current will burn it out. An excessively large amount of current \textit{may} make it explode. I highly recommend trying it once under controlled circumstances. Wear eye protection! There will probably be exactly one or two pieces of shrapnel, but it would really suck to get one in your eye. For best results, connect the LED to a power supply and slowly turn up the voltage (starting from 0). You'll get to see all phases of operation for the LED. Below 0.7V it probably will not turn on. From 0.7 to somewhere around 4-6V it will steadily get brighter. At some point it will reach a maximum brightness and then begin to heat up, at which point it will probably start to dim. At some point after that, it will go out. Cranking up the voltage more will (probably) cause it to explode. 
+
+Note: It is generally not a fiery explosion, so eye protection is generally sufficient precautions.
+
+Note 2: No, that's not a challenge. If you light the lab on fire trying this then you did it on purpose. Consider yourself warned and thus fully liable for any damage you cause.
+
+Sometimes the conductive element inside just melts and you don't get an explosion. It really depends on the LED.
 
 \subsection{Voltage Divider}
 
-There's one last circuit I want to mention because it becomes very important when dealing with analog sensors. The voltage divider. An example is shown in Figure \ref{fig:voltagedivider}. The basic idea here is that you have a known resistor value for R1, and some variable value for R2. A common one is a thermistor - a resistor that changes its value based on temperature. In fact, an excellent experiment to try is to use a thermistor in exactly this circuit configuration to measure the temperature of water. It's very easy, and will teach you about the analog to digital converter. There's also the matter of sensor calibration, but I won't go in to the details on that here. Suffice it to say that all sensors are terrible, and you should never trust them until you've tested them rigorously.
+There's one last circuit I want to mention because it becomes very important when dealing with analog sensors. The voltage divider. An example is shown in Figure \ref{fig:voltagedivider}. The basic idea here is that you have a known resistor value for R1, and some variable value for R2. A common one is a thermistor - a resistor that changes its value based on temperature. In fact, an excellent experiment to try is to use a thermistor in exactly this circuit configuration to measure the temperature of water. It's very easy, and will teach you about the analog to digital converter. It will probably also teach that water is conductive, and shortly thereafter that hot glue is not (for electricity or heat). There's also the matter of sensor calibration, but I won't go in to the details on that here. Suffice it to say that all sensors are terrible, and you should never trust them until you've tested them rigorously.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.75]{voltagedivider.png}
-\label{fig:voltagedivider}
 \caption{Differential Drive}
+\label{fig:voltagedivider}
 \end{figure}
 
 The general plan is to supply a known voltage to $V_{in}$, have a known $R_1$, and measure $V_{out}$. With these pieces of information, you can solve for $R_2$ using Ohm's law. The derivation isn't difficult, but other people have already done it, so here it is. Once you have $R_2$ you just refer to your sensor calibration or the datasheet for the part, and you have your value for (in this case) temperature.
@@ -154,7 +170,7 @@ R_2 = R_1*\frac{1}{(\frac{V_{in}}{V_{out}}-1)}
 
 \subsection{The Basics}
 
-We have had a lot of problems dealing with batteries over the years. Partly because people are lazy, but mostly because they don't understand how batteries work or how to properly maintain them. All batteries are basically slow, controlled, chemical reactions. They are not magical devices that store and dispense electric charge. The closest thing to that is a capacitor, which is two metal plates with an insulator between them. By applying voltage, you charged the plates, storing energy in the form of actual electric charge. However, capacitors tend to discharge all of their stored energy at once. In adddition, the total energy they can store is far less than most batteries. Batteries, on the other hand, store energy in the form of chemical potential energy. This is far more stable than storing raw electric charge, but it does lead to a few problems. The big on is that, since the energy storage relies on chemistry, temperature is important. Being stored in a place that is too hot or too cold can cause a battery to burst, or drain it. Another is that, over time, the chemistry can get disrupted, causing the battery's maximum storage potential to decline.
+We have had a lot of problems dealing with batteries over the years. Partly because people are lazy, but mostly because they don't understand how batteries work or how to properly maintain them. All batteries are basically slow, controlled, chemical reactions. They are not magical devices that store and dispense electric charge. The closest thing to that is a capacitor, which is two metal plates with an insulator between them. By applying voltage, you charged the plates, storing energy in the form of actual electric charge. However, capacitors tend to discharge all of their stored energy at once. In adddition, the total energy they can store is far less than most batteries. Batteries, on the other hand, store energy in the form of chemical potential energy. This is far more stable than storing raw electric charge, but it does lead to a few problems. The big one is that, since the energy storage relies on chemistry, temperature is important. Being stored in a place that is too hot or too cold can cause a battery to burst, or drain it. Another is that, over time, the chemistry can get disrupted, causing the battery's maximum storage potential to decline.
 
 \subsection{Which Numbers Are Important?}
 
@@ -162,9 +178,9 @@ Now you know what voltage, current, and resistance all mean, but how do you use 
 
 \subsubsection{Voltage - V}
 
-We'll start with voltage because that's the easiest one to handle. You want to make sure the voltage your batteries produces matches the voltage rating for the things you want to power: motors, cpu, sensors, etc. However, there's another consideration to make. You almost never want your batteries directly connected to your sensitive electronics. You always want a regulator of some sort in between. Why? As you drain a battery, the voltage will fluctuate. This can cause damage to unshielded electronics. We'll talk about regulators in Section \ref{sec:regulators}. In addition to the power fluctuations, you rarely have motors that you want to drive with the same voltage as the computer. In practice, you'll want to match your main battery voltage to the voltage of the motors you want to power, and then use regulators to smooth and reduce the voltage for the other components.
+We'll start with voltage because that's the easiest one to handle. You want to make sure the voltage your batteries produces matches the voltage rating for the things you want to power: motors, cpu, sensors, etc. However, there's another consideration to make. You almost never want your batteries directly connected to your sensitive electronics. You always want a regulator of some sort in between. Why? As you drain a battery, the voltage will decline over time. In addition, large loads on the battery can temporarily cause the voltage to fluctuate i.e. powering motors. Motors also cause back-emf, but we'll talk about that later. All of this can cause damage to unshielded electronics. We'll talk about regulators in Section \ref{sec:regulators}. In addition to the power fluctuations, you rarely have motors that you want to drive with the same voltage as the computer. In practice, you'll want to match your main battery voltage to the voltage of the motors you want to power, and then use regulators to smooth and reduce the voltage for the other components.
 
-\subsubsection{Capacity - mAh}
+\subsubsection{Capacity - mAh "milli-Amp Hours"}
 
 This is the best measure of how much actual energy the battery can hold. To put it simply, a 1000mAh battery could sustain a drain of 1A for 1 hour before being depleted. If you draw 2A it will only last half an hour. At 0.5A, two hours. It's a very silly unit when you think about it, but it makes the math easy.
 
@@ -175,7 +191,7 @@ Most batteries have a C rating. This is a somewhat cryptic value that tells you 
 
 \subsection{Lead Acid Batteries - Pb}
 
-Lead acid batteries are very stable. That's why we use them in cars. They also have a pretty good capacity, and are able to source a tremendous amount of current at once. This is good, because it takes a lot of force to turn over an engine. For a rugged, outdoor robot that may experience a variety of temperature conditions, lead-acid may be the way to go. However, lead-acid batteries are generally larger and heavier than their counterparts. Charging them is easy. Just hook them up to a power supply, set the power supply to the battery's rated voltage, and limit the current. What you limit the current to depends on the battery. Car batteries can generally handle up to 6A. The real problem is heat. If you charge too fast, the metal plates in the battery heat up, and can cause the acid to boil. This creates potentially toxic vapors and, if the vapors escape the battery housing, reduce the lifespan and charge of the battery. Other than charging to quickly, there isn't much to worry about here. Please charge in a well-ventilated area, just in case. Running a lead-acid battery dead isn't really a big deal as long as you don't leave it dead for a long time, or it doesn't get to cold while dead.
+Lead acid batteries are very stable. That's why we use them in cars. They also have a pretty good capacity, and are able to source a tremendous amount of current at once. This is good, because it takes a lot of force to turn over an engine. For a rugged, outdoor robot that may experience a variety of temperature conditions, lead-acid may be the way to go. However, lead-acid batteries are generally larger and heavier than their counterparts. Charging them is easy. Just hook them up to a power supply, set the power supply to the battery's rated voltage, and limit the current. What you limit the current to depends on the battery. Car batteries can generally handle up to 6A. The real problem is heat. If you charge too fast, the metal plates in the battery heat up, and can cause the acid to boil. This creates potentially toxic vapors and, if the vapors escape the battery housing, reduce the lifespan and charge of the battery. Other than charging too quickly, there isn't much to worry about here. Please charge in a well-ventilated area, just in case. Running a lead-acid battery dead isn't really a big deal as long as you don't leave it dead for a long time, or it doesn't get too cold while dead.
 
 \subsection{Lithium Polymer - LiPo}
 
@@ -186,17 +202,17 @@ That all said, LiPo batteries are pretty safe if you follow the guidelines I set
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.75]{lipovoltage.png}
-\label{fig:lipovoltage}
 \caption{LiPo Voltage VS Charge}
+\label{fig:lipovoltage}
 \end{figure}
 
 As a side note, this chart is for one specific battery I found on a forum post at Traxxas.com. Individual results may vary in specifics, but the point is the same. Monitor your voltage and don't let it drop below 3.0V per cell. There is one additional caveat. LiPo batteries don't hold their charge forever, and they will, if left sitting on a shelf for long periods of time, eventually degrade. It is recommended to discharge and charge a LiPo battery every few months when it is not in active use. Discharging can be done by using the LiPo while closely monitoring the voltage, or with a dedicated charger. The chargers in the lab have this capability.
 
-The final thing to mention is balancing. Because a LiPo battery may be made up of multiple cells, the total voltage isn't enough to tell the health of the battery. In the lab we have at least two balances. Some chargers will also balance while they charge. Balancing slowly bleeds charge from one cell and puts it into another cell. This keeps the cells from becoming unbalanced. This is a good thing. Each cell may discharge differently because chemistry is a sloppy science and never works quite the way it's supposed to. This can lead to one cell with a much higher or lower voltage than the others. If one cell gets overcharged, it may swell and/or rupture. If one cell gets too low, it may "die". Dead cells are ones that have dropped to a low enough voltage that they cannot safely be recharged. Most chargers will refused to charge the battery if there are dead cells. If you know what you're doing, sometimes dead cells can be nursed back to life, but it's a delicate and potentially dangerous procedure. It's usually better to recycle the battery and get a new one.
+The final thing to mention is balancing. Because a LiPo battery may be made up of multiple cells, the total voltage isn't enough to tell the health of the battery. In the lab we have at least two balancers. Some chargers will also balance while they charge. Balancing slowly bleeds charge from one cell and puts it into another cell. This keeps the cells from becoming unbalanced. This is a good thing. Each cell may discharge differently because chemistry is a sloppy science and never works quite the way it's supposed to. This can lead to one cell with a much higher or lower voltage than the others. If one cell gets overcharged, it may swell and/or rupture. If one cell gets too low, it may "die". Dead cells are ones that have dropped to a low enough voltage that they cannot safely be recharged. Most chargers will refuse to charge the battery if there are dead cells. If you know what you're doing, sometimes dead cells can be nursed back to life, but it's a delicate and potentially dangerous procedure. It's usually better to recycle the battery and get a new one.
 
 \subsection{Other Batteries}
 
-There are three more common types of batteries. Lithium Iron Phosphate - LiFePO4 often pronounced "LieFo" - Nickle Metal Hydride - NiMH - and Nickle Cadmium - NiCd "Nigh-Cad". I haven't personally worked with either, so the internet is a better resource then I am. My vague understanding is that LiFePO4 are similar to LiPo batteries but more stable and more expensive. A quick Google search tells me that NiMH is the new NiCd, and is used in general consumer electronics, so it must be pretty stable, but doesn't (in general) have as much energy density as Lithium batteries.
+There are three more common types of batteries. Lithium Iron Phosphate - LiFePO4 often pronounced "LieFo" - Nickle Metal Hydride - NiMH - and Nickle Cadmium - NiCd "Nigh-Cad". I haven't personally worked with these, so the internet is a better resource then I am. My vague understanding is that LiFePO4 are similar to LiPo batteries but more stable and more expensive. A quick Google search tells me that NiMH is the new NiCd, and is used in general consumer electronics, so it must be pretty stable, but doesn't (in general) have as much energy density as Lithium batteries.
 
 \section{Tips For Not Lighting Things On Fire}
 
@@ -210,7 +226,7 @@ This should be common sense, but you'd be surprised how often people get overcon
 
 If you're working on a circuit, if you aren't immediately dealing with a wire, tape the end. Most of the instances in which I blew something up were because I forgot about a wire that wasn't connected, and it brushed up against something else, making a short. This is particularly important when dealing with batteries. Remember, you can't turn a battery off. If both terminals of a battery aren't connected to something, the free wires should be taped over.
 
-Fun Fact: If you plug the gate pin on a MOSFET in to 24VDC, while the source is floating and the drain is grounded, it explodes.
+Fun Fact: If you plug the gate pin on a MOSFET in to 24VDC, while the source is floating and the drain is grounded, it explodes. Guess how that happened? I sure didn't plug the gate in to 24VDC on purpose.
 
 \subsubsection{Be Careful Around Batteries}
 
